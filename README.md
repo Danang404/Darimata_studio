@@ -52,27 +52,6 @@ Halaman ini mengimplementasikan **13 komponen anatomi inti** sebuah landing page
 
 ---
 
-## 💻 Cara Menjalankan Proyek Secara Lokal
-
-Sangat mudah untuk menjalankan proyek ini di perangkat lokal Anda karena tidak memerlukan proses instalasi *package dependency* yang rumit (menggunakan CDN).
-
-1.  **Clone Repositori Ini:**
-    ```bash
-    git clone https://github.com/username/garbage_classification.git
-    ```
-    *(Sesuaikan nama repositori jika diperlukan)*
-
-2.  **Masuk ke Direktori Proyek:**
-    ```bash
-    cd nama-direktori
-    ```
-
-3.  **Buka File `index.html`:**
-    * Klik dua kali pada file `index.html`, atau
-    * Gunakan ekstensi **Live Server** di VS Code untuk pengalaman pengembangan yang lebih baik.
-
----
-
 ## 👥 Tim Pengembang (Tim 23.11)
 
 Proyek ini dikembangkan dan dikelola oleh mahasiswa berdedikasi berikut:
