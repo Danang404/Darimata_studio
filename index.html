@@ -1,15 +1,1104 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Dari Mata | Future of Fashion</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #07080f;
+            --bg2: #0d0f1c;
+            --bg3: #111422;
+            --gold: #e8c46a;
+            --gold-dim: rgba(232,196,106,0.18);
+            --gold-glow: rgba(232,196,106,0.35);
+            --white: #f0f2ff;
+            --muted: #6b718f;
+            --border: rgba(255,255,255,0.07);
+            --card-bg: rgba(255,255,255,0.03);
+        }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg);
+            color: var(--white);
+            overflow-x: hidden;
+            line-height: 1.65;
+        }
+
+        h1,h2,h3,h4,h5,.brand { font-family: 'Space Grotesk', sans-serif; }
+
+        /* === SCROLLBAR === */
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
+
+        /* === UTILS === */
+        .gold { color: var(--gold); }
+        .text-grad {
+            background: linear-gradient(110deg, #fff 0%, var(--gold) 55%, #fff 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+            background-size: 200%; animation: shimmer 4s linear infinite;
+        }
+        @keyframes shimmer { 0%{background-position:200%} 100%{background-position:-200%} }
+
+        .sec { padding: 110px 0; }
+        .sec-sm { padding: 70px 0; }
+
+        .label-tag {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: var(--gold-dim); border: 1px solid rgba(232,196,106,0.25);
+            color: var(--gold); font-size: 0.78rem; letter-spacing: 2px;
+            text-transform: uppercase; padding: 6px 16px; border-radius: 100px;
+            font-family: 'Syne', sans-serif; font-weight: 600; margin-bottom: 20px;
+        }
+        .label-tag::before { content:''; width:6px;height:6px;border-radius:50%;background:var(--gold);animation:pulse-dot 1.5s ease-in-out infinite; }
+        @keyframes pulse-dot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
+
+        .section-title { font-size: clamp(2rem,4vw,2.9rem); font-weight: 800; line-height: 1.15; }
+        .section-sub { color: var(--muted); font-size: 1.05rem; max-width: 520px; margin: 0 auto; }
+
+        /* === ANNOUNCEMENT BAR === */
+        .announce-bar {
+            background: var(--gold); color: var(--bg); font-size: 0.82rem;
+            font-weight: 600; letter-spacing: 1.5px; text-align: center; padding: 9px;
+            font-family: 'Syne', sans-serif; text-transform: uppercase;
+            position: sticky; top: 0; z-index: 1001;
+        }
+        .announce-bar a { color: var(--bg); text-decoration: underline; margin-left: 8px; }
+
+        /* === NAVBAR === */
+        .navbar {
+            background: rgba(7,8,15,0.88); backdrop-filter: blur(20px) saturate(180%);
+            border-bottom: 1px solid var(--border); padding: 0.9rem 0;
+            position: sticky; top: 33px; z-index: 1000;
+            transition: padding 0.3s ease, background 0.3s ease;
+        }
+        .navbar.scrolled { padding: 0.6rem 0; background: rgba(7,8,15,0.97); top: 0; }
+        .navbar-brand { font-family:'Syne',sans-serif; font-size:1.6rem; font-weight:800; color:#fff !important; letter-spacing:-1px; }
+        .navbar-brand span { color: var(--gold); }
+        .nav-link { color: rgba(240,242,255,0.75) !important; font-weight: 500; font-size: 0.9rem; margin: 0 6px; transition: color 0.2s; }
+        .nav-link:hover, .nav-link.active { color: var(--gold) !important; }
+        .btn-nav {
+            background: var(--gold); color: var(--bg); border: none;
+            padding: 9px 22px; border-radius: 6px; font-weight: 700;
+            font-size: 0.85rem; font-family:'Syne',sans-serif; letter-spacing: 0.5px;
+            transition: all 0.25s; white-space: nowrap;
+        }
+        .btn-nav:hover { background: #fff; color: var(--bg); transform: translateY(-1px); }
+
+        /* === HERO === */
+        .hero {
+            min-height: 100vh; display: flex; align-items: center; position: relative;
+            overflow: hidden;
+        }
+        .hero-bg {
+            position: absolute; inset: 0; pointer-events: none;
+            background:
+                radial-gradient(ellipse 70% 60% at 70% 50%, rgba(232,196,106,0.07) 0%, transparent 60%),
+                radial-gradient(ellipse 50% 80% at 20% 80%, rgba(30,50,100,0.4) 0%, transparent 60%);
+        }
+        .hero-grid {
+            position: absolute; inset: 0; pointer-events: none; opacity: 0.04;
+            background-image: linear-gradient(var(--white) 1px, transparent 1px),
+                              linear-gradient(90deg, var(--white) 1px, transparent 1px);
+            background-size: 60px 60px;
+        }
+        .hero-label { letter-spacing: 3px; font-size: 0.78rem; }
+        .hero-title { font-size: clamp(3rem, 7vw, 5.5rem); line-height: 1.05; font-weight: 800; }
+        .hero-desc { color: var(--muted); font-size: 1.1rem; max-width: 480px; }
+        .hero-img {
+            width: 100%; max-width: 1000px; border-radius: 20px;
+            filter: drop-shadow(0 30px 60px rgba(0,0,0,0.7));
+            animation: floatImg 7s ease-in-out infinite;
+            transform-origin: center;
+        }
+        @keyframes floatImg {
+            0%,100% { transform: translateY(0) rotate(-1.5deg); }
+            50% { transform: translateY(-22px) rotate(-1.5deg); }
+        }
+        .hero-tag-pill {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+            padding: 8px 16px; border-radius: 100px; font-size: 0.85rem; color: var(--muted);
+        }
+        .hero-tag-pill b { color: var(--white); }
+        .btn-hero-main {
+            background: var(--gold); color: var(--bg); border: none;
+            padding: 14px 32px; border-radius: 8px; font-weight: 700;
+            font-size: 1rem; font-family:'Syne',sans-serif; letter-spacing: 0.5px;
+            transition: all 0.3s; display: inline-flex; align-items: center; gap: 10px;
+        }
+        .btn-hero-main:hover { background: #fff; color: var(--bg); transform: translateY(-2px); box-shadow: 0 12px 30px var(--gold-glow); }
+        .btn-hero-ghost {
+            background: transparent; color: var(--white); border: 1px solid var(--border);
+            padding: 14px 32px; border-radius: 8px; font-weight: 500;
+            font-size: 1rem; transition: all 0.3s; display: inline-flex; align-items: center; gap: 10px;
+        }
+        .btn-hero-ghost:hover { border-color: var(--gold); color: var(--gold); background: var(--gold-dim); }
+
+        /* === TRUSTED BY / LOGO BAR === */
+        .logo-bar { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 30px 0; background: rgba(255,255,255,0.01); }
+        .logo-bar-text { font-size: 0.75rem; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; white-space: nowrap; }
+        .partner-logos { display: flex; align-items: center; gap: 36px; flex-wrap: wrap; justify-content: center; }
+        .partner-logo { color: rgba(255,255,255,0.2); font-family:'Syne',sans-serif; font-weight:700; font-size:1.1rem; letter-spacing:1px; transition:color 0.3s; }
+        .partner-logo:hover { color: var(--gold); }
+
+        /* === STATS === */
+        .stats-row { padding: 60px 0; }
+        .stat-box { text-align: center; padding: 32px 20px; border-right: 1px solid var(--border); }
+        .stat-box:last-child { border-right: none; }
+        .stat-num { font-size: 3rem; font-weight: 800; color: var(--white); font-family:'Syne',sans-serif; line-height: 1; }
+        .stat-num span { color: var(--gold); }
+        .stat-label { font-size: 0.8rem; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; margin-top: 6px; }
+
+        /* === FEATURES === */
+        .feat-card {
+            background: var(--card-bg); border: 1px solid var(--border); border-radius: 20px;
+            padding: 36px 28px; height: 100%; transition: all 0.4s ease; position: relative; overflow: hidden;
+        }
+        .feat-card::after {
+            content: ''; position: absolute; inset: 0; border-radius: 20px;
+            background: linear-gradient(135deg, var(--gold-dim), transparent);
+            opacity: 0; transition: opacity 0.4s;
+        }
+        .feat-card:hover { transform: translateY(-8px); border-color: rgba(232,196,106,0.4); }
+        .feat-card:hover::after { opacity: 1; }
+        .feat-icon {
+            width: 56px; height: 56px; border-radius: 14px;
+            background: var(--gold-dim); border: 1px solid rgba(232,196,106,0.2);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.4rem; color: var(--gold); margin-bottom: 24px; position: relative; z-index: 1;
+        }
+        .feat-card h4 { color: var(--white); font-weight: 700; margin-bottom: 12px; position: relative; z-index: 1; }
+        .feat-card p { color: var(--muted); font-size: 0.95rem; margin: 0; position: relative; z-index: 1; }
+
+        /* === HOW IT WORKS === */
+        .how-section { background: var(--bg2); }
+        .step-item { display: flex; gap: 28px; align-items: flex-start; padding: 32px 0; border-bottom: 1px solid var(--border); }
+        .step-item:last-child { border-bottom: none; }
+        .step-num {
+            min-width: 52px; height: 52px; border-radius: 14px;
+            background: var(--gold-dim); border: 1px solid rgba(232,196,106,0.3);
+            display: flex; align-items: center; justify-content: center;
+            font-family:'Syne',sans-serif; font-weight:800; font-size:1.2rem; color: var(--gold);
+        }
+        .step-text h5 { color: var(--white); font-weight: 700; margin-bottom: 6px; }
+        .step-text p { color: var(--muted); margin: 0; font-size: 0.95rem; }
+        .how-img-side {
+            border-radius: 24px; overflow: hidden; border: 1px solid var(--border);
+            background: var(--bg3); height: 100%;
+        }
+        .how-img-side img { width: 100%; height: 100%; object-fit: cover; opacity: 0.85; }
+
+        /* === PRODUCTS === */
+        .products-section { background: var(--bg3); }
+        .filter-pills { display: flex; gap: 10px; flex-wrap: wrap; }
+        .pill-btn {
+            background: transparent; border: 1px solid var(--border); color: var(--muted);
+            padding: 7px 20px; border-radius: 100px; font-size: 0.85rem; font-weight: 500;
+            transition: all 0.25s; cursor: pointer;
+        }
+        .pill-btn.active, .pill-btn:hover { background: var(--gold-dim); border-color: rgba(232,196,106,0.4); color: var(--gold); }
+        .prod-card {
+            background: var(--card-bg); border: 1px solid var(--border); border-radius: 18px;
+            overflow: hidden; transition: all 0.35s; display: flex; flex-direction: column; height: 100%;
+        }
+        .prod-card:hover { border-color: rgba(232,196,106,0.45); transform: translateY(-6px); }
+        .prod-img { height: 270px; overflow: hidden; position: relative; }
+        .prod-img img { width:100%; height:100%; object-fit:cover; transition: transform 0.6s ease; }
+        .prod-card:hover .prod-img img { transform: scale(1.07); }
+        .prod-badge {
+            position: absolute; top: 14px; left: 14px;
+            padding: 4px 12px; border-radius: 100px; font-size: 0.72rem; font-weight: 700;
+            font-family:'Syne',sans-serif; letter-spacing: 1px; text-transform: uppercase;
+        }
+        .badge-gold { background: var(--gold); color: var(--bg); }
+        .badge-red { background: #e85c6a; color: #fff; }
+        .badge-blue { background: #3a7bd5; color: #fff; }
+        .prod-body { padding: 22px; display: flex; flex-direction: column; flex-grow: 1; }
+        .prod-title { color: var(--white); font-weight: 700; font-size: 1.1rem; margin-bottom: 6px; }
+        .prod-desc { color: var(--muted); font-size: 0.88rem; margin-bottom: 14px; }
+        .prod-price { color: var(--gold); font-size: 1.25rem; font-weight: 700; font-family:'Syne',sans-serif; }
+        .prod-price-old { color: var(--muted); font-size: 0.85rem; text-decoration: line-through; margin-left: 8px; }
+        .btn-buy {
+            background: var(--gold); color: var(--bg); border: none;
+            padding: 12px; border-radius: 10px; font-weight: 700; width: 100%;
+            font-family:'Syne',sans-serif; letter-spacing: 0.5px; margin-top: 14px;
+            transition: all 0.3s; display: flex; align-items: center; justify-content: center; gap: 8px;
+        }
+        .btn-buy:hover { background: #fff; transform: scale(1.02); }
+        .prod-stars { color: var(--gold); font-size: 0.78rem; }
+
+        /* === PROMO BANNER === */
+        .promo-section { background: var(--bg2); }
+        .promo-card {
+            background: linear-gradient(135deg, #1a1e35 0%, #0d0f1c 100%);
+            border: 1px solid rgba(232,196,106,0.25); border-radius: 28px;
+            padding: 60px 50px; position: relative; overflow: hidden;
+        }
+        .promo-card::before {
+            content:''; position:absolute; right:-80px; top:-80px;
+            width:320px; height:320px; border-radius:50%;
+            background: radial-gradient(circle, var(--gold-glow) 0%, transparent 70%);
+        }
+        .promo-code {
+            display: inline-block; background: var(--gold-dim); border: 1px dashed var(--gold);
+            color: var(--gold); padding: 10px 24px; border-radius: 10px;
+            font-family:'Syne',sans-serif; font-weight:800; font-size:1.4rem; letter-spacing:3px;
+        }
+
+        /* === TESTIMONIAL === */
+        .testi-card {
+            background: var(--card-bg); border: 1px solid var(--border); border-radius: 20px;
+            padding: 32px; transition: border-color 0.3s; height: 100%;
+        }
+        .testi-card:hover { border-color: rgba(232,196,106,0.3); }
+        .testi-avatar {
+            width: 44px; height: 44px; border-radius: 50%; background: var(--gold);
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 800; font-family:'Syne',sans-serif; color: var(--bg); font-size: 1rem;
+        }
+        .testi-name { color: var(--white); font-weight: 700; font-size: 0.95rem; }
+        .testi-role { color: var(--muted); font-size: 0.8rem; }
+        .testi-text { color: rgba(240,242,255,0.8); font-size: 0.95rem; line-height: 1.7; font-style: italic; }
+        .stars { color: var(--gold); font-size: 0.8rem; }
+
+        /* === COMPARISON TABLE === */
+        .compare-section { background: var(--bg3); }
+        .compare-table { border-radius: 18px; overflow: hidden; border: 1px solid var(--border); }
+        .compare-table th { background: var(--bg2); color: var(--gold); font-family:'Syne',sans-serif; font-size: 0.85rem; letter-spacing:1px; padding: 18px 20px; border-bottom: 1px solid var(--border); text-transform:uppercase; }
+        .compare-table th:first-child { color: var(--muted); }
+        .compare-table td { padding: 16px 20px; border-bottom: 1px solid var(--border); color: var(--white); font-size: 0.93rem; vertical-align: middle; }
+        .compare-table tr:last-child td { border-bottom: none; }
+        .compare-table td.highlight { background: rgba(232,196,106,0.04); }
+        .compare-table td:first-child { color: var(--muted); font-size: 0.88rem; }
+        .check-gold { color: var(--gold); font-size: 1.1rem; }
+        .check-no { color: #444; font-size: 1.1rem; }
+        .compare-head-hl { background: rgba(232,196,106,0.1) !important; }
+
+        /* === FAQ === */
+        .faq-section { background: var(--bg2); }
+        .acc-item { border-bottom: 1px solid var(--border); }
+        .acc-btn {
+            background: transparent; border: none; width: 100%; text-align: left;
+            padding: 22px 0; color: var(--white); font-weight: 600; font-size: 1rem;
+            display: flex; justify-content: space-between; align-items: center; gap: 16px;
+            cursor: pointer; transition: color 0.25s; font-family:'Syne',sans-serif;
+        }
+        .acc-btn:hover { color: var(--gold); }
+        .acc-btn .acc-icon { color: var(--gold); font-size: 0.9rem; transition: transform 0.3s; flex-shrink:0; }
+        .acc-btn[aria-expanded="true"] .acc-icon { transform: rotate(45deg); }
+        .acc-body { color: var(--muted); font-size: 0.95rem; padding-bottom: 22px; line-height: 1.7; }
+
+        /* === NEWSLETTER === */
+        .news-section { background: var(--bg); }
+        .news-box {
+            background: linear-gradient(130deg, #151824 0%, #0d0f1c 100%);
+            border: 1px solid rgba(232,196,106,0.2); border-radius: 28px; padding: 70px 50px;
+            text-align: center; position: relative; overflow: hidden;
+        }
+        .news-box::after {
+            content:''; position:absolute; inset:0; pointer-events:none;
+            background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(232,196,106,0.06), transparent 60%);
+        }
+        .news-input-group { max-width: 480px; margin: 0 auto; display: flex; gap: 10px; }
+        .news-input {
+            flex: 1; background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+            border-radius: 10px; padding: 13px 18px; color: var(--white); font-size: 0.95rem;
+            outline: none; transition: border-color 0.3s;
+        }
+        .news-input:focus { border-color: rgba(232,196,106,0.5); }
+        .news-input::placeholder { color: var(--muted); }
+        .btn-news {
+            background: var(--gold); color: var(--bg); border: none;
+            padding: 13px 26px; border-radius: 10px; font-weight: 700;
+            font-family:'Syne',sans-serif; white-space: nowrap; transition: all 0.3s;
+        }
+        .btn-news:hover { background: #fff; }
+
+        /* === PAYMENT TRUST BAR === */
+        .trust-bar { padding: 40px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+        .trust-item { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+        .trust-icon { font-size: 1.8rem; color: var(--muted); }
+        .trust-text { font-size: 0.78rem; color: var(--muted); text-align: center; letter-spacing: 0.5px; }
+
+        /* === FOOTER === */
+        footer { background: #050609; padding-top: 70px; }
+        .footer-brand { font-size: 1.9rem; font-weight: 800; font-family:'Syne',sans-serif; color: var(--white); }
+        .footer-brand span { color: var(--gold); }
+        .footer-desc { color: var(--muted); font-size: 0.9rem; line-height: 1.8; max-width: 260px; }
+        .footer-heading { font-family:'Syne',sans-serif; font-weight:700; font-size:0.85rem; letter-spacing:2px; color: var(--gold); text-transform: uppercase; margin-bottom: 20px; }
+        .footer-link { display: block; color: var(--muted); text-decoration:none; font-size:0.9rem; margin-bottom:10px; transition: color 0.2s; }
+        .footer-link:hover { color: var(--white); }
+        .social-btn {
+            width: 38px; height: 38px; border-radius: 10px; background: var(--card-bg);
+            border: 1px solid var(--border); display: inline-flex; align-items: center;
+            justify-content: center; color: var(--muted); font-size: 0.9rem; transition: all 0.3s; margin-right: 8px;
+        }
+        .social-btn:hover { background: var(--gold-dim); border-color: rgba(232,196,106,0.4); color: var(--gold); }
+        .team-card {
+            display: flex; align-items: center; gap: 12px;
+            background: var(--card-bg); border: 1px solid var(--border);
+            border-radius: 12px; padding: 12px 16px; margin-bottom: 10px; transition: border-color 0.3s;
+        }
+        .team-card:hover { border-color: rgba(232,196,106,0.3); }
+        .team-av {
+            width: 36px; height: 36px; border-radius: 50%; background: var(--gold);
+            display: flex; align-items: center; justify-content: center;
+            font-family:'Syne',sans-serif; font-weight:800; color: var(--bg); font-size: 0.9rem; flex-shrink:0;
+        }
+        .team-name { color: var(--white); font-weight: 600; font-size: 0.88rem; }
+        .team-nim { color: var(--muted); font-size: 0.78rem; }
+        .footer-bottom { border-top: 1px solid var(--border); padding: 28px 0; margin-top: 50px; }
+        .footer-bottom p { color: var(--muted); font-size: 0.83rem; margin: 0; }
+
+        /* === RESPONSIVE === */
+        @media (max-width: 991px) {
+            .hero-title { font-size: clamp(2.4rem, 8vw, 3.5rem); }
+            .sec { padding: 75px 0; }
+            .promo-card { padding: 40px 28px; }
+            .news-box { padding: 50px 24px; }
+            .stat-box { border-right: none; border-bottom: 1px solid var(--border); }
+            .stat-box:last-child { border-bottom: none; }
+        }
+        @media (max-width: 576px) {
+            .news-input-group { flex-direction: column; }
+            .announce-bar { font-size: 0.72rem; }
+        }
+    </style>
 </head>
 <body>
-    <h1>Hello World</h1>
-    <p>Danang Yudo Prakosa 23.11.5841</p>
-    <p>Reno Chandra 23.11.5811</p>
-    <p>Agio Prima 23.11.5834</p>
 
+<!-- ① ANNOUNCEMENT BAR -->
+<div class="announce-bar">
+    🎉 GRAND OPENING — Gratis ongkir se-Indonesia hari ini!
+    <a href="#collection">Belanja Sekarang →</a>
+</div>
+
+<!-- ② NAVBAR -->
+<nav class="navbar navbar-expand-lg" id="mainNav">
+    <div class="container">
+        <a class="navbar-brand brand" href="#">DARI<span>MATA</span></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu"
+            style="border-color:rgba(255,255,255,0.2); background:rgba(255,255,255,0.05);">
+            <span style="color:#fff; font-size:1.2rem;"><i class="fas fa-bars"></i></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navMenu">
+            <ul class="navbar-nav mx-auto gap-1">
+                <li class="nav-item"><a class="nav-link active" href="#home">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="#features">Keunggulan</a></li>
+                <li class="nav-item"><a class="nav-link" href="#collection">Koleksi</a></li>
+                <li class="nav-item"><a class="nav-link" href="#how">Cara Beli</a></li>
+                <li class="nav-item"><a class="nav-link" href="#testimoni">Testimoni</a></li>
+                <li class="nav-item"><a class="nav-link" href="#faq">FAQ</a></li>
+                <li class="nav-item"><a class="nav-link" href="#contact">Kontak</a></li>
+            </ul>
+            <div class="mt-3 mt-lg-0">
+                <a href="#collection" class="btn-nav">Beli Sekarang</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- ③ HERO -->
+<section id="home" class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+    <div class="container py-5">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-6" data-aos="fade-right" data-aos-duration="900">
+                <div class="label-tag">EST. 2024 · FUTURE WEAR</div>
+                <h1 class="hero-title mb-4">
+                    Define Your<br>
+                    <span class="text-grad">Digital Identity</span>
+                </h1>
+                <p class="hero-desc mb-5">
+                    Dari Mata menghadirkan apparel yang menggabungkan estetika modern
+                    dengan kenyamanan premium. Didesain untuk generasi yang berani tampil beda.
+                </p>
+                <div class="d-flex flex-wrap gap-3 mb-5">
+                    <a href="#collection" class="btn-hero-main">
+                        <i class="fa-solid fa-bolt"></i> Beli Sekarang
+                    </a>
+                    <a href="#features" class="btn-hero-ghost">
+                        <i class="fa-solid fa-play-circle"></i> Pelajari Lebih
+                    </a>
+                </div>
+                <div class="d-flex flex-wrap gap-3">
+                    <div class="hero-tag-pill"><i class="fas fa-star gold" style="font-size:.8rem"></i> <b>4.9/5</b> dari 5K+ review</div>
+                    <div class="hero-tag-pill"><i class="fas fa-shield-alt gold" style="font-size:.8rem"></i> Garansi <b>Money Back</b></div>
+                    <div class="hero-tag-pill"><i class="fas fa-truck gold" style="font-size:.8rem"></i> Gratis Ongkir <b>Hari Ini</b></div>
+                </div>
+            </div>
+            <div class="col-lg-6 text-center" data-aos="fade-left" data-aos-duration="900" data-aos-delay="150">
+                <img src="https://z-cdn-media.chatglm.cn/files/fc39c0c6-7b47-4335-860f-7c4272122c3b.png?auth_key=1879471396-bc94e5cb64a64870b68716d506651114-0-8f2b0ffd245863211bc5e1201d2713d6"
+                    alt="Dari Mata Tee" class="hero-img">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ④ LOGO / TRUSTED BY -->
+<div class="logo-bar" data-aos="fade-up">
+    <div class="container">
+        <div class="d-flex align-items-center flex-wrap gap-4 justify-content-center">
+            <span class="logo-bar-text">Dipercaya oleh</span>
+            <div class="partner-logos">
+                <span class="partner-logo">TOKOPEDIA</span>
+                <span class="partner-logo">SHOPEE</span>
+                <span class="partner-logo">ZALORA</span>
+                <span class="partner-logo">TIKTOK SHOP</span>
+                <span class="partner-logo">LAZADA</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ⑤ STATS -->
+<div class="stats-row" data-aos="fade-up">
+    <div class="container">
+        <div class="row g-0">
+            <div class="col-6 col-md-3">
+                <div class="stat-box">
+                    <div class="stat-num">5K<span>+</span></div>
+                    <div class="stat-label">Produk Terjual</div>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="stat-box">
+                    <div class="stat-num">4.9<span>★</span></div>
+                    <div class="stat-label">Rating Review</div>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="stat-box">
+                    <div class="stat-num">100<span>+</span></div>
+                    <div class="stat-label">Desain Eksklusif</div>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="stat-box">
+                    <div class="stat-num">24<span>/7</span></div>
+                    <div class="stat-label">Layanan Support</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ⑥ FEATURES / USP -->
+<section id="features" class="sec">
+    <div class="container">
+        <div class="row justify-content-center mb-5 text-center" data-aos="fade-up">
+            <div class="col-lg-7">
+                <div class="label-tag">Keunggulan Kami</div>
+                <h2 class="section-title">Kenapa Memilih <span class="gold">Dari Mata?</span></h2>
+                <p class="section-sub mt-3">Bukan sekadar pakaian — kami menjual kualitas, karakter, dan identitas.</p>
+            </div>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="50">
+                <div class="feat-card">
+                    <div class="feat-icon"><i class="fa-solid fa-layer-group"></i></div>
+                    <h4>Premium Material</h4>
+                    <p>Cotton Combed 30s terbaik dengan quality control ketat. Nyaman sepanjang hari, awet bertahun-tahun.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="feat-card">
+                    <div class="feat-icon"><i class="fa-solid fa-bezier-curve"></i></div>
+                    <h4>Original Design</h4>
+                    <p>Desain 100% original — eksklusif dan tidak akan kamu temukan di tempat lain. Tampil unik, tampil berani.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="150">
+                <div class="feat-card">
+                    <div class="feat-icon"><i class="fa-solid fa-rocket"></i></div>
+                    <h4>Fast Delivery</h4>
+                    <p>Order sebelum jam 15.00 WIB dikirim hari itu juga. Packing aman, anti sobek, sampai tujuan.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="feat-card">
+                    <div class="feat-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                    <h4>Garansi Penuh</h4>
+                    <p>Garansi 100% uang kembali jika produk cacat atau tidak sesuai. Tukar ukuran gratis 3×24 jam.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="250">
+                <div class="feat-card">
+                    <div class="feat-icon"><i class="fa-solid fa-headset"></i></div>
+                    <h4>CS 24/7</h4>
+                    <p>Tim customer service siap membantu kapan saja, termasuk weekend dan hari libur nasional.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="feat-card">
+                    <div class="feat-icon"><i class="fa-solid fa-leaf"></i></div>
+                    <h4>Eco Packaging</h4>
+                    <p>Kemasan ramah lingkungan berbahan daur ulang. Fashion terbaik untuk generasi yang peduli bumi.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ⑦ HOW IT WORKS -->
+<section id="how" class="sec how-section">
+    <div class="container">
+        <div class="row g-5 align-items-center">
+            <div class="col-lg-5" data-aos="fade-right">
+                <div class="label-tag">Cara Pembelian</div>
+                <h2 class="section-title mb-3">Pesan dalam <span class="gold">3 Langkah</span> Mudah</h2>
+                <p class="text-muted" style="color:var(--muted)!important;font-size:.95rem;">Proses belanja yang simpel, cepat, dan aman. Dari pilih hingga pakai, semua mudah.</p>
+
+                <div class="mt-5">
+                    <div class="step-item" data-aos="fade-up" data-aos-delay="50">
+                        <div class="step-num">01</div>
+                        <div class="step-text">
+                            <h5>Pilih & Klik Beli Sekarang</h5>
+                            <p>Temukan produk favoritmu, pilih ukuran yang pas menggunakan size chart yang tersedia, lalu klik tombol Beli Sekarang.</p>
+                        </div>
+                    </div>
+                    <div class="step-item" data-aos="fade-up" data-aos-delay="100">
+                        <div class="step-num">02</div>
+                        <div class="step-text">
+                            <h5>Isi Data & Pilih Pembayaran</h5>
+                            <p>Masukkan alamat pengiriman, pilih jasa ekspedisi, dan selesaikan pembayaran via transfer bank, e-wallet, atau COD.</p>
+                        </div>
+                    </div>
+                    <div class="step-item" data-aos="fade-up" data-aos-delay="150">
+                        <div class="step-num">03</div>
+                        <div class="step-text">
+                            <h5>Pesanan Dikirim & Diterima</h5>
+                            <p>Pesanan langsung diproses. Kamu akan mendapat notifikasi dan nomor resi. Terima paketmu, langsung pakai!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-7" data-aos="fade-left" data-aos-delay="100">
+                <div class="how-img-side" style="min-height:420px;">
+                    <img src="women merah.jpg" alt="Cara Pembelian Dari Mata">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ⑧ PRODUCT COLLECTION -->
+<section id="collection" class="sec products-section">
+    <div class="container">
+        <div class="row justify-content-between align-items-end mb-5" data-aos="fade-up">
+            <div class="col-lg-5">
+                <div class="label-tag">Koleksi Terbaru</div>
+                <h2 class="section-title">Trending <span class="gold">Now</span></h2>
+            </div>
+            <div class="col-lg-auto mt-3 mt-lg-0">
+                <div class="filter-pills">
+                    <button class="pill-btn active">Semua</button>
+                    <button class="pill-btn">Kaos</button>
+                    <button class="pill-btn">Totebag</button>
+                    <button class="pill-btn">Jaket</button>
+                    <button class="pill-btn">Aksesoris</button>
+                </div>
+            </div>
+        </div>
+        <div class="row g-4">
+            <!-- Product 1 -->
+            <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="50">
+                <div class="prod-card">
+                    <div class="prod-img">
+                        <img src="https://z-cdn-media.chatglm.cn/files/fc39c0c6-7b47-4335-860f-7c4272122c3b.png?auth_key=1879471396-bc94e5cb64a64870b68716d506651114-0-8f2b0ffd245863211bc5e1201d2713d6" alt="Kaos Creativity Black">
+                        <span class="prod-badge badge-gold">Best Seller</span>
+                    </div>
+                    <div class="prod-body">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <div class="stars">★★★★★ <span style="color:var(--muted);font-size:.78rem;">(248)</span></div>
+                        </div>
+                        <div class="prod-title">Kaos Creativity Black</div>
+                        <div class="prod-desc">Simbol kebebasan berpikir dengan desain typografi yang kuat dan berani.</div>
+                        <div class="mt-auto">
+                            <span class="prod-price">Rp 129.000</span>
+                            <span class="prod-price-old">Rp 159.000</span>
+                        </div>
+                        <button class="btn-buy" onclick="alert('Produk ditambahkan ke keranjang!')">
+                            <i class="fa-solid fa-bolt"></i> Beli Sekarang
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- Product 2 -->
+            <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="100">
+                <div class="prod-card">
+                    <div class="prod-img">
+                        <img src="HAPPINESS - BLUE - BACK.png " alt="CREWNECK HAPPINESS BLUE">
+                        <span class="prod-badge badge-blue">New Arrival</span>
+                    </div>
+                    <div class="prod-body">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <div class="stars">★★★★★ <span style="color:var(--muted);font-size:.78rem;">(134)</span></div>
+                        </div>
+                        <div class="prod-title">CREWNECK HAPPINESS BLUEs</div>
+                        <div class="prod-desc">Crewneck dengan desain minimalis, material premium, dan futuristik.</div>
+                        <div class="mt-auto">
+                            <span class="prod-price">Rp 189.000</span>
+                        </div>
+                        <button class="btn-buy" onclick="alert('Totebag Cyber Canvas ditambahkan!')">
+                            <i class="fa-solid fa-bolt"></i> Beli Sekarang
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- Product 3 -->
+            <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="150">
+                <div class="prod-card">
+                    <div class="prod-img">
+                        <img src="MINIMALISM - BLACK - BACK.png" alt="TOTEBAG CYBER CANVAS">
+                        <span class="prod-badge badge-red">Limited</span>
+                    </div>
+                    <div class="prod-body">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <div class="stars">★★★★★ <span style="color:var(--muted);font-size:.78rem;">(87)</span></div>
+                        </div>
+                        <div class="prod-title">Kaos Boxy Feet Minimalism </div>
+                        <div class="prod-desc">Kaos dengan potongan Boxy Feet Tee. Outdoor ready, tampil tetap stylish, dan minimalis.</div>
+                        <div class="mt-auto">
+                            <span class="prod-price">Rp 249.000</span>
+                        </div>
+                        <button class="btn-buy" onclick="alert('Windbreaker Tech ditambahkan!')">
+                            <i class="fa-solid fa-bolt"></i> Beli Sekarang
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mt-5" data-aos="fade-up">
+            <a href="#" class="btn-hero-ghost" style="display:inline-flex;">
+                Lihat Semua Koleksi <i class="fa-solid fa-arrow-right ms-2"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- PROMO / CTA SECTION -->
+<section class="sec promo-section">
+    <div class="container" data-aos="zoom-in">
+        <div class="promo-card">
+            <div class="row align-items-center g-4 position-relative" style="z-index:1">
+                <div class="col-lg-7">
+                    <div class="label-tag">Penawaran Spesial</div>
+                    <h2 class="section-title mb-3">Diskon <span class="gold">10%</span> untuk Pembelian Pertama!</h2>
+                    <p style="color:var(--muted); font-size:.95rem; max-width:440px;">
+                        Gunakan kode eksklusif di bawah saat checkout dan nikmati penghematan langsung. Berlaku hari ini saja!
+                    </p>
+                    <div class="mt-4 d-flex flex-wrap gap-3 align-items-center">
+                        <div class="promo-code">DARIMATA10</div>
+                        <button class="btn-hero-ghost" onclick="navigator.clipboard.writeText('DARIMATA10').then(()=>alert('Kode disalin!'))">
+                            <i class="fa-regular fa-copy me-2"></i> Salin Kode
+                        </button>
+                    </div>
+                </div>
+                <div class="col-lg-5 text-center">
+                    <div style="font-size:8rem; line-height:1; opacity:.15; font-family:'Syne',sans-serif; font-weight:800; color:var(--gold);">10%</div>
+                    <div style="margin-top:-50px;">
+                        <a href="#collection" class="btn-hero-main" style="margin:0 auto;">
+                            Klaim Diskon <i class="fa-solid fa-arrow-right ms-2"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ⑨ TESTIMONIALS -->
+<section id="testimoni" class="sec" style="background:var(--bg);">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <div class="label-tag" style="margin:0 auto 16px;">Testimoni Pelanggan</div>
+            <h2 class="section-title">Apa Kata <span class="gold">Mereka?</span></h2>
+            <p class="section-sub mt-3">Lebih dari 5.000+ pelanggan puas di seluruh Indonesia.</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-4" data-aos="flip-left" data-aos-delay="0">
+                <div class="testi-card">
+                    <div class="stars mb-3">★★★★★</div>
+                    <p class="testi-text">"Kualitas bahannya juara! Desainnya unik dan nggak pasaran. Pengiriman cepat banget, paket rapih. Sudah repeat order 3 kali!"</p>
+                    <div class="d-flex align-items-center gap-3 mt-4">
+                        <div class="testi-avatar">A</div>
+                        <div>
+                            <div class="testi-name">Andi Wijaya</div>
+                            <div class="testi-role">Jakarta · Verified Buyer</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4" data-aos="flip-left" data-aos-delay="100">
+                <div class="testi-card">
+                    <div class="stars mb-3">★★★★½</div>
+                    <p class="testi-text">"Totebagnya kece banget! Muat laptop, desainnya futuristik. Cocok buat anak muda urban. Next mau beli Windbreaker-nya!"</p>
+                    <div class="d-flex align-items-center gap-3 mt-4">
+                        <div class="testi-avatar">S</div>
+                        <div>
+                            <div class="testi-name">Sarah Melati</div>
+                            <div class="testi-role">Bandung · Verified Buyer</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4" data-aos="flip-left" data-aos-delay="200">
+                <div class="testi-card">
+                    <div class="stars mb-3">★★★★★</div>
+                    <p class="testi-text">"Customer service responsif, barang sesuai foto bahkan lebih bagus. Garansi penukaran ukuran prosesnya gampang banget. Pokoknya top!"</p>
+                    <div class="d-flex align-items-center gap-3 mt-4">
+                        <div class="testi-avatar">R</div>
+                        <div>
+                            <div class="testi-name">Rangga Dwi</div>
+                            <div class="testi-role">Surabaya · Verified Buyer</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ⑩ COMPARISON TABLE (Anatomi: Perbandingan) -->
+<section class="sec compare-section">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <div class="label-tag" style="margin:0 auto 16px;">Perbandingan</div>
+            <h2 class="section-title">Dari Mata vs <span class="gold">Kompetitor</span></h2>
+            <p class="section-sub mt-3">Lihat sendiri mengapa kami menjadi pilihan utama fashion digitial Indonesia.</p>
+        </div>
+        <div class="table-responsive" data-aos="fade-up" data-aos-delay="100">
+            <table class="table compare-table">
+                <thead>
+                    <tr>
+                        <th style="width:30%">Fitur</th>
+                        <th class="text-center compare-head-hl">DARI MATA ✦</th>
+                        <th class="text-center">Brand Lain A</th>
+                        <th class="text-center">Brand Lain B</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Cotton Combed 30s Premium</td>
+                        <td class="text-center highlight"><span class="check-gold">✓</span></td>
+                        <td class="text-center"><span class="check-no">✗</span></td>
+                        <td class="text-center"><span class="check-no">✗</span></td>
+                    </tr>
+                    <tr>
+                        <td>Desain 100% Original</td>
+                        <td class="text-center highlight"><span class="check-gold">✓</span></td>
+                        <td class="text-center"><span class="check-gold">✓</span></td>
+                        <td class="text-center"><span class="check-no">✗</span></td>
+                    </tr>
+                    <tr>
+                        <td>Garansi Tukar Ukuran</td>
+                        <td class="text-center highlight"><span class="check-gold">✓</span></td>
+                        <td class="text-center"><span class="check-no">✗</span></td>
+                        <td class="text-center"><span class="check-no">✗</span></td>
+                    </tr>
+                    <tr>
+                        <td>Customer Service 24/7</td>
+                        <td class="text-center highlight"><span class="check-gold">✓</span></td>
+                        <td class="text-center"><span class="check-no">✗</span></td>
+                        <td class="text-center"><span class="check-gold">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Eco-Friendly Packaging</td>
+                        <td class="text-center highlight"><span class="check-gold">✓</span></td>
+                        <td class="text-center"><span class="check-no">✗</span></td>
+                        <td class="text-center"><span class="check-no">✗</span></td>
+                    </tr>
+                    <tr>
+                        <td>Garansi Uang Kembali</td>
+                        <td class="text-center highlight"><span class="check-gold">✓</span></td>
+                        <td class="text-center"><span class="check-gold">✓</span></td>
+                        <td class="text-center"><span class="check-no">✗</span></td>
+                    </tr>
+                    <tr>
+                        <td>Same-day Shipping</td>
+                        <td class="text-center highlight"><span class="check-gold">✓</span></td>
+                        <td class="text-center"><span class="check-no">✗</span></td>
+                        <td class="text-center"><span class="check-gold">✓</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<!-- ⑪ FAQ -->
+<section id="faq" class="sec faq-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-7">
+                <div class="text-center mb-5" data-aos="fade-up">
+                    <div class="label-tag" style="margin:0 auto 16px;">FAQ</div>
+                    <h2 class="section-title">Pertanyaan yang <span class="gold">Sering Ditanyakan</span></h2>
+                    <p class="section-sub mt-3">Ada pertanyaan? Temukan jawabannya di sini.</p>
+                </div>
+                <div data-aos="fade-up" data-aos-delay="100">
+                    <div class="acc-item">
+                        <button class="acc-btn" type="button" onclick="toggleAcc(this)" aria-expanded="false">
+                            Bagaimana cara mengetahui ukuran yang pas?
+                            <span class="acc-icon"><i class="fa-solid fa-plus"></i></span>
+                        </button>
+                        <div class="acc-body" style="display:none;">
+                            Semua produk kami menggunakan potongan Regular Fit standar lokal. Detail size chart (Panjang × Lebar) terlampir di setiap halaman produk. Jika ragu, hubungi CS kami untuk saran ukuran.
+                        </div>
+                    </div>
+                    <div class="acc-item">
+                        <button class="acc-btn" type="button" onclick="toggleAcc(this)" aria-expanded="false">
+                            Apakah bisa tukar barang kalau kebesaran/kekecilan?
+                            <span class="acc-icon"><i class="fa-solid fa-plus"></i></span>
+                        </button>
+                        <div class="acc-body" style="display:none;">
+                            Tentu! Kami melayani penukaran ukuran maksimal 3×24 jam setelah barang diterima, dengan syarat tag belum dilepas, belum dicuci, dan tidak ada wangi parfum. Ongkos kirim penukaran ditanggung pembeli.
+                        </div>
+                    </div>
+                    <div class="acc-item">
+                        <button class="acc-btn" type="button" onclick="toggleAcc(this)" aria-expanded="false">
+                            Berapa lama estimasi pengiriman?
+                            <span class="acc-icon"><i class="fa-solid fa-plus"></i></span>
+                        </button>
+                        <div class="acc-body" style="display:none;">
+                            Order yang dibayar sebelum 15.00 WIB dikirim hari itu juga. Estimasi 1–3 hari untuk Jabodetabek dan 3–5 hari untuk luar daerah.
+                        </div>
+                    </div>
+                    <div class="acc-item">
+                        <button class="acc-btn" type="button" onclick="toggleAcc(this)" aria-expanded="false">
+                            Apakah produk Sold Out akan restock?
+                            <span class="acc-icon"><i class="fa-solid fa-plus"></i></span>
+                        </button>
+                        <div class="acc-body" style="display:none;">
+                            Beberapa koleksi bersifat <em>Limited Edition</em> dan tidak diproduksi ulang. Jika statusnya Sold Out, kemungkinan besar tidak restock. Checkout segera sebelum habis!
+                        </div>
+                    </div>
+                    <div class="acc-item">
+                        <button class="acc-btn" type="button" onclick="toggleAcc(this)" aria-expanded="false">
+                            Bagaimana cara perawatan sablon agar awet?
+                            <span class="acc-icon"><i class="fa-solid fa-plus"></i></span>
+                        </button>
+                        <div class="acc-body" style="display:none;">
+                            Cuci dengan air suhu normal, jangan disikat keras pada sablon, dan setrika dalam keadaan terbalik (inside-out) agar desain tetap awet dan tidak pecah.
+                        </div>
+                    </div>
+                    <div class="acc-item">
+                        <button class="acc-btn" type="button" onclick="toggleAcc(this)" aria-expanded="false">
+                            Metode pembayaran apa saja yang tersedia?
+                            <span class="acc-icon"><i class="fa-solid fa-plus"></i></span>
+                        </button>
+                        <div class="acc-body" style="display:none;">
+                            Kami menerima transfer bank (BCA, BRI, Mandiri, BNI), e-wallet (GoPay, OVO, Dana, ShopeePay), QRIS, kartu kredit/debit, serta COD untuk area tertentu.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ⑫ NEWSLETTER / EMAIL CAPTURE -->
+<section class="sec-sm news-section">
+    <div class="container" data-aos="zoom-in">
+        <div class="news-box">
+            <div class="position-relative" style="z-index:1">
+                <div class="label-tag" style="margin:0 auto 16px;">Newsletter</div>
+                <h2 class="section-title mb-3">Jangan Ketinggalan <span class="gold">Drop Terbaru</span></h2>
+                <p class="section-sub mb-5">Daftar dan dapatkan info koleksi eksklusif, diskon, dan promo khusus langsung di inbox-mu.</p>
+                <div class="news-input-group">
+                    <input type="email" class="news-input" placeholder="Masukkan email kamu...">
+                    <button class="btn-news" onclick="alert('Terima kasih! Kamu sudah berlangganan.')">Langganan</button>
+                </div>
+                <p style="color:var(--muted);font-size:.8rem;margin-top:14px;">
+                    <i class="fa-solid fa-lock me-1"></i> Kami tidak akan pernah mengirim spam. Bisa berhenti langganan kapan saja.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- PAYMENT & TRUST BAR -->
+<div class="trust-bar" data-aos="fade-up">
+    <div class="container">
+        <div class="row g-4 justify-content-center">
+            <div class="col-6 col-md-2">
+                <div class="trust-item">
+                    <i class="fa-brands fa-cc-visa trust-icon"></i>
+                    <span class="trust-text">Visa</span>
+                </div>
+            </div>
+            <div class="col-6 col-md-2">
+                <div class="trust-item">
+                    <i class="fa-brands fa-cc-mastercard trust-icon"></i>
+                    <span class="trust-text">Mastercard</span>
+                </div>
+            </div>
+            <div class="col-6 col-md-2">
+                <div class="trust-item">
+                    <i class="fa-brands fa-google-pay trust-icon"></i>
+                    <span class="trust-text">GoPay / OVO</span>
+                </div>
+            </div>
+            <div class="col-6 col-md-2">
+                <div class="trust-item">
+                    <i class="fa-solid fa-qrcode trust-icon"></i>
+                    <span class="trust-text">QRIS</span>
+                </div>
+            </div>
+            <div class="col-6 col-md-2">
+                <div class="trust-item">
+                    <i class="fa-solid fa-money-bill-wave trust-icon"></i>
+                    <span class="trust-text">COD</span>
+                </div>
+            </div>
+            <div class="col-6 col-md-2">
+                <div class="trust-item">
+                    <i class="fa-solid fa-shield-check trust-icon"></i>
+                    <span class="trust-text" style="color:#4ade80;">Transaksi Aman</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ⑬ FOOTER -->
+<footer id="contact">
+    <div class="container">
+        <div class="row g-5">
+            <div class="col-lg-4">
+                <div class="footer-brand">DARI<span>MATA</span></div>
+                <p class="footer-desc mt-3">Fashion brand digital fokus pada kualitas dan kreativitas. Untuk generasi masa depan yang berani tampil autentik.</p>
+                <div class="mt-4">
+                    <a href="#" class="social-btn"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" class="social-btn"><i class="fa-brands fa-tiktok"></i></a>
+                    <a href="#" class="social-btn"><i class="fa-brands fa-whatsapp"></i></a>
+                    <a href="#" class="social-btn"><i class="fa-brands fa-twitter"></i></a>
+                </div>
+            </div>
+            <div class="col-6 col-lg-2">
+                <div class="footer-heading">Menu</div>
+                <a href="#home" class="footer-link">Home</a>
+                <a href="#features" class="footer-link">Keunggulan</a>
+                <a href="#collection" class="footer-link">Koleksi</a>
+                <a href="#how" class="footer-link">Cara Beli</a>
+                <a href="#testimoni" class="footer-link">Testimoni</a>
+            </div>
+            <div class="col-6 col-lg-2">
+                <div class="footer-heading">Bantuan</div>
+                <a href="#faq" class="footer-link">FAQ</a>
+                <a href="#" class="footer-link">Cek Resi</a>
+                <a href="#" class="footer-link">Kebijakan Retur</a>
+                <a href="#" class="footer-link">Syarat & Ketentuan</a>
+                <a href="#contact" class="footer-link">Kontak</a>
+            </div>
+            <div class="col-lg-4">
+                <div class="footer-heading">Tim Pengembang</div>
+                <div class="team-card">
+                    <div class="team-av">D</div>
+                    <div>
+                        <div class="team-name">Danang Yudo Prakosa</div>
+                        <div class="team-nim">NIM: 23.11.5841</div>
+                    </div>
+                </div>
+                <div class="team-card">
+                    <div class="team-av">R</div>
+                    <div>
+                        <div class="team-name">Reno</div>
+                        <div class="team-nim">NIM: 23.11.5811</div>
+                    </div>
+                </div>
+                <div class="team-card">
+                    <div class="team-av">A</div>
+                    <div>
+                        <div class="team-name">Agio Prima</div>
+                        <div class="team-nim">NIM: 23.5830</div>
+                    </div>
+                </div>
+                <p style="color:var(--muted);font-size:.82rem;margin-top:14px;">
+                    <i class="fa-regular fa-envelope me-1 gold"></i> hello@darimata.com<br>
+                    <i class="fa-regular fa-clock me-1 gold"></i> Senin–Minggu, 24 Jam
+                </p>
+            </div>
+        </div>
+        <div class="footer-bottom text-center">
+            <p>© 2024 Dari Mata Inc. — Future of Fashion · Dibuat dengan ♥ oleh Tim 23.11</p>
+        </div>
+    </div>
+</footer>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    AOS.init({ duration: 800, once: true, offset: 60 });
+
+    // Sticky navbar
+    const nav = document.getElementById('mainNav');
+    const announceH = document.querySelector('.announce-bar').offsetHeight;
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > announceH + 20) {
+            nav.classList.add('scrolled');
+        } else {
+            nav.classList.remove('scrolled');
+        }
+    });
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+        a.addEventListener('click', e => {
+            const t = document.querySelector(a.getAttribute('href'));
+            if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+        });
+    });
+
+    // FAQ accordion
+    function toggleAcc(btn) {
+        const body = btn.nextElementSibling;
+        const isOpen = btn.getAttribute('aria-expanded') === 'true';
+        // close all
+        document.querySelectorAll('.acc-btn').forEach(b => {
+            b.setAttribute('aria-expanded', 'false');
+            b.nextElementSibling.style.display = 'none';
+        });
+        if (!isOpen) {
+            btn.setAttribute('aria-expanded', 'true');
+            body.style.display = 'block';
+        }
+    }
+
+    // Filter pills (visual only)
+    document.querySelectorAll('.pill-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.pill-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        });
+    });
+
+    // Active nav on scroll
+    const sections = document.querySelectorAll('section[id], div[id="contact"]');
+    window.addEventListener('scroll', () => {
+        let current = '';
+        sections.forEach(s => {
+            if (window.scrollY >= s.offsetTop - 120) current = s.getAttribute('id');
+        });
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.classList.toggle('active', link.getAttribute('href') === '#' + current);
+        });
+    });
+</script>
 </body>
 </html>
