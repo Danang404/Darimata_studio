@@ -73,11 +73,19 @@
                     "full": "9999px"
             },
             "spacing": {
-                    "gutter": "32px",
+                    "gutter": "clamp(16px, 3vw, 32px)",
                     "unit": "8px",
-                    "section-gap": "120px",
-                    "card-internal": "40px",
-                    "container-padding": "64px"
+                    "section-gap": "clamp(56px, 10vw, 120px)",
+                    "card-internal": "clamp(20px, 4vw, 40px)",
+                    "container-padding": "clamp(20px, 5vw, 64px)"
+            },
+            "fontSize": {
+                    "display-xl": ["clamp(2.1rem, 4vw + 1.1rem, 4.5rem)", { "lineHeight": "1.12", "letterSpacing": "-0.01em" }],
+                    "headline-lg": ["clamp(1.6rem, 2.4vw + 1rem, 2.75rem)", { "lineHeight": "1.18" }],
+                    "headline-md": ["clamp(1.15rem, 0.8vw + 0.95rem, 1.5rem)", { "lineHeight": "1.3" }],
+                    "body-lg": ["clamp(1rem, 0.35vw + 0.92rem, 1.25rem)", { "lineHeight": "1.6" }],
+                    "body-md": ["clamp(0.9rem, 0.2vw + 0.86rem, 1rem)", { "lineHeight": "1.6" }],
+                    "label-caps": ["0.75rem", { "lineHeight": "1.4", "letterSpacing": "0.08em" }]
             },
             "fontFamily": {
                     "body-lg": ["Plus Jakarta Sans"],
@@ -147,7 +155,7 @@
         }
 
         .accordion-item.active .accordion-content {
-            max-height: 200px;
+            max-height: 320px;
         }
 
         .accordion-item.active .icon-rotate {
@@ -159,15 +167,47 @@
             height: 100%;
             object-fit: cover;
         }
+
+        #products, #karimun, #hanam, #fruits, #about {
+            scroll-margin-top: 96px;
+        }
+
+        @media (max-width: 767px) {
+            #products, #karimun, #hanam, #fruits, #about {
+                scroll-margin-top: 84px;
+            }
+        }
+
+        /* Scroll Reveal Animation - Cara Order cards */
+        @media (prefers-reduced-motion: no-preference) {
+            .reveal-card {
+                opacity: 0;
+                transform: translateY(20px);
+                transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+            }
+            .reveal-card.is-visible {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .reveal-card {
+                opacity: 0;
+                transition: opacity 0.6s ease-out;
+            }
+            .reveal-card.is-visible {
+                opacity: 1;
+            }
+        }
     </style>
 </head>
 <body class="bg-background text-on-surface font-body-md overflow-x-hidden">
 <div class="custom-cursor" id="cursor"></div>
 <!-- Navigation -->
-<nav class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 py-4 rounded-full mt-4 mx-auto w-[calc(100%-48px)] max-w-[1516px] bg-glass-surface backdrop-blur-xl border border-glass-border shadow-sm">
-<div class="flex items-center gap-3">
-<div class="w-10 h-10 rounded-full border-2 border-on-surface flex items-center justify-center font-extrabold text-headline-md">H</div>
-<span class="font-headline-md text-headline-md font-bold tracking-tighter text-on-surface">Quincy Aromatique</span>
+<nav class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-4 md:px-8 py-3 md:py-4 rounded-full mt-3 md:mt-4 mx-auto w-[calc(100%-24px)] md:w-[calc(100%-48px)] max-w-[1516px] bg-glass-surface backdrop-blur-xl border border-glass-border shadow-sm" id="mainNav">
+<div class="flex items-center gap-2 md:gap-3 min-w-0">
+<div class="w-9 h-9 md:w-10 md:h-10 shrink-0 rounded-full border-2 border-on-surface flex items-center justify-center font-extrabold text-headline-md">H</div>
+<span class="font-headline-md text-headline-md font-bold tracking-tighter text-on-surface truncate">Quincy Aromatique</span>
 </div>
 <div class="hidden md:flex items-center gap-8">
 <a class="font-body-md text-body-md text-on-surface-variant hover:opacity-70 transition-opacity" href="#karimun">Karimun</a>
@@ -175,15 +215,32 @@
 <a class="font-body-md text-body-md text-on-surface-variant hover:opacity-70 transition-opacity" href="#fruits">Fruits</a>
 <a class="font-body-md text-body-md text-on-surface-variant hover:opacity-70 transition-opacity" href="#about">About</a>
 </div>
-<button class="bg-primary text-on-primary px-6 py-3 rounded-full font-bold hover:opacity-90 transition-all active:scale-95">Order Now</button>
+<div class="flex items-center gap-2 md:gap-3 shrink-0">
+<button aria-label="Buka keranjang" class="relative w-11 h-11 md:w-12 md:h-12 rounded-full border border-outline flex items-center justify-center hover:bg-surface-container-high transition-colors" onclick="openCart()">
+<span class="material-symbols-outlined">shopping_cart</span>
+<span class="absolute -top-1 -right-1 min-w-[20px] h-5 px-1 rounded-full bg-primary text-on-primary text-[11px] font-bold flex items-center justify-center hidden" id="cartBadge">0</span>
+</button>
+<button class="hidden md:inline-flex bg-primary text-on-primary px-6 py-3 rounded-full font-bold hover:opacity-90 transition-all active:scale-95" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">Order Now</button>
+<button aria-expanded="false" aria-label="Buka menu" class="md:hidden w-11 h-11 rounded-full border border-outline flex items-center justify-center hover:bg-surface-container-high transition-colors" id="mobileMenuBtn" onclick="toggleMobileMenu()">
+<span class="material-symbols-outlined" id="mobileMenuIcon">menu</span>
+</button>
+</div>
 </nav>
+<!-- Mobile Menu Panel -->
+<div class="fixed top-[76px] left-3 right-3 z-40 md:hidden rounded-2xl bg-glass-surface backdrop-blur-xl border border-glass-border shadow-lg p-4 flex-col gap-1 hidden" id="mobileMenuPanel">
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-on-surface px-4 py-3 rounded-xl hover:bg-white/40 transition-colors" href="#karimun" onclick="closeMobileMenu()">Karimun</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-on-surface px-4 py-3 rounded-xl hover:bg-white/40 transition-colors" href="#hanam" onclick="closeMobileMenu()">Hanam</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-on-surface px-4 py-3 rounded-xl hover:bg-white/40 transition-colors" href="#fruits" onclick="closeMobileMenu()">Fruits</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-on-surface px-4 py-3 rounded-xl hover:bg-white/40 transition-colors" href="#about" onclick="closeMobileMenu()">About</a>
+<button class="bg-primary text-on-primary px-6 py-3 mt-2 rounded-full font-bold hover:opacity-90 transition-all active:scale-95" onclick="closeMobileMenu(); document.getElementById('products').scrollIntoView({behavior:'smooth'})">Order Now</button>
+</div>
 <!-- Hero Section -->
-<header class="relative min-h-screen flex items-center justify-center pt-32 overflow-hidden" id="hero">
+<header class="relative min-h-screen flex items-center justify-center pt-32 pb-20 md:pt-32 md:pb-0 overflow-hidden" id="hero">
 <div class="absolute inset-0 z-0">
 <canvas id="hero-canvas"></canvas>
 </div>
 <div class="container max-w-[1516px] px-container-padding relative z-20 text-center flex justify-center">
-<div class="glass-panel px-12 py-16 max-w-5xl w-full">
+<div class="glass-panel px-6 py-10 md:px-12 md:py-16 max-w-5xl w-full">
 <div class="inline-flex items-center gap-2 px-6 py-2 rounded-full bg-white/40 border border-white/60 mb-8 backdrop-blur-md relative overflow-hidden shadow-sm group cursor-default">
 <div class="absolute inset-0 -translate-x-full group-hover:animate-[shimmer_1.5s_infinite] bg-gradient-to-r from-transparent via-white/50 to-transparent"></div>
 <span class="material-symbols-outlined text-primary text-[18px]">verified</span>
@@ -197,11 +254,11 @@
                     Temukan karakter unikmu melalui koleksi parfum eksklusif Quincy Aromatique. Dibuat untuk meninggalkan jejak memori yang tak terlupakan.
                 </p>
 <div class="flex flex-col md:flex-row items-center justify-center gap-4">
-<a class="bg-on-surface text-surface px-8 py-4 rounded-full font-semibold text-body-lg flex items-center gap-2 hover:opacity-90 transition-opacity shadow-lg" href="#products">
+<a class="w-full md:w-auto bg-on-surface text-surface px-8 py-4 rounded-full font-semibold text-body-lg flex items-center justify-center gap-2 hover:opacity-90 transition-opacity shadow-lg" href="#products">
                         Lihat Koleksi
                         <span class="material-symbols-outlined">arrow_forward</span>
 </a>
-<button class="bg-white/50 text-on-surface border border-white/60 px-8 py-4 rounded-full font-semibold text-body-lg backdrop-blur-md hover:bg-white/80 transition-colors shadow-sm flex items-center gap-2" onclick="openQuiz()">
+<button class="w-full md:w-auto bg-white/50 text-on-surface border border-white/60 px-8 py-4 rounded-full font-semibold text-body-lg backdrop-blur-md hover:bg-white/80 transition-colors shadow-sm flex items-center justify-center gap-2" onclick="openQuiz()">
 <span class="material-symbols-outlined text-primary">quiz</span>
                         Ikuti Quiz Kepribadian
                     </button>
@@ -209,12 +266,60 @@
 </div>
 </div>
 <!-- Floating Elements -->
-<div class="absolute bottom-20 left-1/2 -translate-x-1/2 flex gap-20 opacity-40 pointer-events-none z-10 mix-blend-overlay">
+<div class="hidden md:flex absolute bottom-20 left-1/2 -translate-x-1/2 gap-20 opacity-40 pointer-events-none z-10 mix-blend-overlay">
 <span class="font-mono-metric text-headline-lg uppercase tracking-[1em]">SCENT</span>
 <span class="font-mono-metric text-headline-lg uppercase tracking-[1em]">ESSENCE</span>
 <span class="font-mono-metric text-headline-lg uppercase tracking-[1em]">MEMOIR</span>
 </div>
 </header>
+<!-- Trust / Social Proof Bar -->
+<section class="px-container-padding py-8 border-y border-glass-border bg-surface-container-lowest/50 backdrop-blur-md">
+<div class="flex justify-around items-center max-w-lg mx-auto gap-4">
+<div class="flex flex-col items-center gap-1">
+<span class="material-symbols-outlined text-primary text-[28px]" style="font-variation-settings: 'FILL' 1;">groups</span>
+<span class="font-headline-md text-[20px] font-bold text-on-surface">10k+</span>
+<span class="font-mono-metric text-[10px] text-on-surface-variant uppercase tracking-widest">Pelanggan</span>
+</div>
+<div class="w-px h-10 bg-glass-border"></div>
+<div class="flex flex-col items-center gap-1">
+<div class="flex items-center text-[#FFD700]">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-headline-md text-[20px] font-bold text-on-surface ml-1">4.9</span>
+</div>
+<span class="font-mono-metric text-[10px] text-on-surface-variant uppercase tracking-widest">Rating</span>
+</div>
+<div class="w-px h-10 bg-glass-border"></div>
+<div class="flex flex-col items-center gap-1">
+<span class="material-symbols-outlined text-primary text-[28px]" style="font-variation-settings: 'FILL' 1;">local_shipping</span>
+<span class="font-headline-md text-[20px] font-bold text-on-surface">6-8 Jam</span>
+<span class="font-mono-metric text-[10px] text-on-surface-variant uppercase tracking-widest">Ketahanan</span>
+</div>
+</div>
+</section>
+<!-- Cara Order Section -->
+<section class="px-container-padding py-section-gap flex flex-col gap-8 items-center bg-surface-container-low">
+<div class="text-center flex flex-col gap-2">
+<span class="font-label-caps text-label-caps text-primary uppercase tracking-widest">Cara Order</span>
+<h2 class="font-headline-lg text-headline-lg font-bold text-on-surface">Mudah, cepat, 3 langkah aja</h2>
+</div>
+<div class="flex flex-col md:flex-row gap-6 w-full max-w-4xl mx-auto">
+<div class="reveal-card flex-1 bg-surface-container-lowest p-6 rounded-2xl shadow-sm border border-glass-border flex flex-col gap-4 text-center md:text-left">
+<span class="font-mono-metric text-[40px] font-bold text-primary-container opacity-20">01</span>
+<h3 class="font-headline-md text-[20px] font-bold text-on-surface">Pilih Varian</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Ikuti quiz wangi atau pilih langsung aroma signature-mu dari koleksi kami.</p>
+</div>
+<div class="reveal-card flex-1 bg-surface-container-lowest p-6 rounded-2xl shadow-sm border border-glass-border flex flex-col gap-4 text-center md:text-left">
+<span class="font-mono-metric text-[40px] font-bold text-primary-container opacity-20">02</span>
+<h3 class="font-headline-md text-[20px] font-bold text-on-surface">Checkout</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Masukkan produk ke keranjang, cek ringkasan pesanan, lalu checkout via WhatsApp.</p>
+</div>
+<div class="reveal-card flex-1 bg-surface-container-lowest p-6 rounded-2xl shadow-sm border border-glass-border flex flex-col gap-4 text-center md:text-left">
+<span class="font-mono-metric text-[40px] font-bold text-primary-container opacity-20">03</span>
+<h3 class="font-headline-md text-[20px] font-bold text-on-surface">Terima &amp; Rasakan</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Pesananmu akan sampai dengan aman, siap jadi cerita pertamamu hari ini.</p>
+</div>
+</div>
+</section>
 <!-- Product Grid -->
 <section class="py-section-gap bg-surface-bright" id="products">
 <div class="container max-w-[1516px] px-container-padding">
@@ -223,7 +328,7 @@
 <h2 class="font-headline-lg text-headline-lg mb-4">Our Signature Collection</h2>
 <p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl">Tiga varian eksklusif yang dirancang khusus untuk menemani setiap momen berhargamu.</p>
 </div>
-<div class="flex gap-4">
+<div class="hidden md:flex gap-4">
 <button class="w-14 h-14 rounded-full border border-outline flex items-center justify-center hover:bg-surface-container-high transition-colors">
 <span class="material-symbols-outlined">chevron_left</span>
 </button>
@@ -248,7 +353,7 @@
 <p class="font-label-caps text-on-surface-variant uppercase mb-1">Price</p>
 <p class="font-headline-md text-headline-md text-on-surface">Rp 75.000</p>
 </div>
-<button class="w-12 h-12 rounded-full bg-success-green text-white flex items-center justify-center hover:scale-110 transition-transform shadow-lg">
+<button class="w-12 h-12 rounded-full bg-success-green text-white flex items-center justify-center hover:scale-110 transition-transform shadow-lg" onclick="addToCart('Karimun', 75000)">
 <span class="material-symbols-outlined">shopping_cart</span>
 </button>
 </div>
@@ -269,7 +374,7 @@
 <p class="font-label-caps text-on-surface-variant uppercase mb-1">Price</p>
 <p class="font-headline-md text-headline-md text-on-surface">Rp 75.000</p>
 </div>
-<button class="w-12 h-12 rounded-full bg-success-green text-white flex items-center justify-center hover:scale-110 transition-transform shadow-lg">
+<button class="w-12 h-12 rounded-full bg-success-green text-white flex items-center justify-center hover:scale-110 transition-transform shadow-lg" onclick="addToCart('Hanam', 75000)">
 <span class="material-symbols-outlined">shopping_cart</span>
 </button>
 </div>
@@ -289,7 +394,7 @@
 <p class="font-label-caps text-on-surface-variant uppercase mb-1">Price</p>
 <p class="font-headline-md text-headline-md text-on-surface">Rp 75.000</p>
 </div>
-<button class="w-12 h-12 rounded-full bg-success-green text-white flex items-center justify-center hover:scale-110 transition-transform shadow-lg">
+<button class="w-12 h-12 rounded-full bg-success-green text-white flex items-center justify-center hover:scale-110 transition-transform shadow-lg" onclick="addToCart('Fruits', 75000)">
 <span class="material-symbols-outlined">shopping_cart</span>
 </button>
 </div>
@@ -298,7 +403,7 @@
 </div>
 </section>
 <!-- Features Section -->
-<section class="py-section-gap bg-surface" id="features">
+<section class="py-section-gap bg-surface" id="about">
 <div class="container max-w-[1516px] px-container-padding">
 <div class="text-center mb-20">
 <h2 class="font-headline-lg text-headline-lg mb-6">Kenapa Quincy?</h2>
@@ -340,7 +445,7 @@
 <section class="py-section-gap relative overflow-hidden">
 <div class="absolute inset-0 bg-on-surface"></div>
 <div class="container max-w-[1516px] px-container-padding relative z-10">
-<div class="grid grid-cols-2 md:grid-cols-4 gap-12 text-center">
+<div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-12 text-center">
 <div class="flex flex-col items-center">
 <span class="font-display-xl text-display-xl text-primary mb-2">EDP</span>
 <span class="font-label-caps text-surface-variant uppercase tracking-widest">Type</span>
@@ -366,34 +471,34 @@
 <h2 class="font-headline-lg text-headline-lg mb-12 text-center">Sering Ditanyakan</h2>
 <div class="space-y-4">
 <div class="accordion-item glass-card rounded-lg overflow-hidden transition-all active border-transparent">
-<button class="w-full p-8 flex justify-between items-center text-left" onclick="toggleAccordion(this)">
+<button class="w-full p-5 md:p-8 flex justify-between items-center gap-4 text-left" onclick="toggleAccordion(this)">
 <span class="font-headline-md text-headline-md">Berapa lama ketahanan parfum Quincy?</span>
 <span class="material-symbols-outlined icon-rotate transition-transform duration-300">expand_more</span>
 </button>
 <div class="accordion-content">
-<div class="px-8 pb-8 text-on-surface-variant text-body-lg">
+<div class="px-5 md:px-8 pb-5 md:pb-8 text-on-surface-variant text-body-lg">
                         Parfum Quincy Aromatique dirancang dengan konsentrasi Eau De Parfum yang mampu bertahan selama 6 hingga 8 jam, tergantung pada aktivitas dan jenis kulit masing-masing pengguna.
                     </div>
 </div>
 </div>
 <div class="accordion-item glass-card rounded-lg overflow-hidden transition-all border-transparent">
-<button class="w-full p-8 flex justify-between items-center text-left" onclick="toggleAccordion(this)">
+<button class="w-full p-5 md:p-8 flex justify-between items-center gap-4 text-left" onclick="toggleAccordion(this)">
 <span class="font-headline-md text-headline-md">Apakah aman digunakan di pakaian?</span>
 <span class="material-symbols-outlined icon-rotate transition-transform duration-300">expand_more</span>
 </button>
 <div class="accordion-content">
-<div class="px-8 pb-8 text-on-surface-variant text-body-lg">
+<div class="px-5 md:px-8 pb-5 md:pb-8 text-on-surface-variant text-body-lg">
                         Ya, formula kami dirancang khusus agar aman digunakan di berbagai jenis kain tanpa meninggalkan noda permanen. Namun, kami tetap menyarankan untuk menyemprotkan dari jarak 15-20cm.
                     </div>
 </div>
 </div>
 <div class="accordion-item glass-card rounded-lg overflow-hidden transition-all border-transparent">
-<button class="w-full p-8 flex justify-between items-center text-left" onclick="toggleAccordion(this)">
+<button class="w-full p-5 md:p-8 flex justify-between items-center gap-4 text-left" onclick="toggleAccordion(this)">
 <span class="font-headline-md text-headline-md">Apakah bisa melakukan pengembalian jika pecah?</span>
 <span class="material-symbols-outlined icon-rotate transition-transform duration-300">expand_more</span>
 </button>
 <div class="accordion-content">
-<div class="px-8 pb-8 text-on-surface-variant text-body-lg">
+<div class="px-5 md:px-8 pb-5 md:pb-8 text-on-surface-variant text-body-lg">
                         Tentu! Kami memberikan garansi 100% ganti baru jika produk diterima dalam keadaan pecah, dengan syarat melampirkan video unboxing saat paket pertama kali dibuka.
                     </div>
 </div>
@@ -404,16 +509,16 @@
 <!-- Closing CTA -->
 <section class="py-section-gap relative">
 <div class="container max-w-[1516px] px-container-padding text-center">
-<div class="glass-card p-16 md:p-24 rounded-xl relative overflow-hidden">
+<div class="glass-card p-8 md:p-16 lg:p-24 rounded-xl relative overflow-hidden">
 <div class="absolute -top-20 -right-20 w-64 h-64 bg-primary rounded-full blur-[100px] opacity-20"></div>
 <div class="absolute -bottom-20 -left-20 w-64 h-64 bg-secondary rounded-full blur-[100px] opacity-20"></div>
 <h2 class="font-display-xl text-display-xl mb-8 relative z-10">Siap untuk memulai ceritamu hari ini?</h2>
 <p class="font-body-lg text-body-lg text-on-surface-variant mb-12 max-w-2xl mx-auto relative z-10">
                 Bergabunglah dengan ribuan orang yang telah menemukan 'signature scent' mereka bersama Quincy Aromatique.
             </p>
-<div class="flex flex-col md:flex-row items-center justify-center gap-6 relative z-10">
-<button class="bg-primary text-on-primary px-12 py-6 rounded-full font-bold text-body-lg hover:scale-105 transition-all shadow-xl">Pesan via WhatsApp</button>
-<button class="bg-on-surface text-surface px-12 py-6 rounded-full font-bold text-body-lg hover:scale-105 transition-all">Lihat Katalog</button>
+<div class="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-6 relative z-10">
+<button class="w-full md:w-auto bg-primary text-on-primary px-8 md:px-12 py-5 md:py-6 rounded-full font-bold text-body-lg hover:scale-105 transition-all shadow-xl" onclick="orderViaWhatsApp()">Pesan via WhatsApp</button>
+<button class="w-full md:w-auto bg-on-surface text-surface px-8 md:px-12 py-5 md:py-6 rounded-full font-bold text-body-lg hover:scale-105 transition-all" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">Lihat Katalog</button>
 </div>
 </div>
 </div>
@@ -429,7 +534,7 @@
 </div>
 <p class="font-body-md text-surface-variant">Menciptakan wewangian yang bukan sekadar aroma, melainkan identitas dan kenangan yang tak lekang oleh waktu.</p>
 </div>
-<div class="grid grid-cols-2 md:grid-cols-3 gap-16">
+<div class="grid grid-cols-2 md:grid-cols-3 gap-8 md:gap-16">
 <div>
 <h5 class="font-label-caps uppercase tracking-widest mb-6 text-primary-fixed">Products</h5>
 <ul class="space-y-4 font-body-md text-surface-variant">
@@ -468,9 +573,37 @@
 </div>
 </div>
 </footer>
+<!-- Cart Modal -->
+<div class="fixed inset-0 bg-on-surface/40 backdrop-blur-sm z-[2000] hidden items-center justify-center p-4 opacity-0 transition-opacity duration-300" id="cartOverlay" onclick="handleCartOverlayClick(event)">
+<div class="glass-card bg-surface/95 rounded-2xl p-6 md:p-8 max-w-lg w-full relative transform scale-95 transition-transform duration-300 shadow-2xl border border-glass-border max-h-[85vh] flex flex-col" id="cartBox">
+<div class="flex items-center justify-between mb-6">
+<h3 class="font-headline-md text-headline-md text-on-surface">Keranjang Kamu</h3>
+<button aria-label="Tutup keranjang" class="text-on-surface-variant hover:text-on-surface" onclick="closeCart()">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<div class="flex-1 overflow-y-auto -mx-2 px-2" id="cartItemsWrap">
+<div class="text-center py-16 text-on-surface-variant" id="cartEmptyState">
+<span class="material-symbols-outlined text-5xl opacity-40 mb-4 block">shopping_cart</span>
+<p class="font-body-md">Keranjang masih kosong.</p>
+</div>
+<div class="flex flex-col gap-4" id="cartItemsList"></div>
+</div>
+<div class="pt-6 mt-2 border-t border-glass-border">
+<div class="flex items-center justify-between mb-6">
+<span class="font-body-md text-on-surface-variant">Total</span>
+<span class="font-headline-md text-headline-md text-on-surface" id="cartTotal">Rp 0</span>
+</div>
+<button class="w-full bg-primary text-on-primary px-8 py-4 rounded-full font-bold flex items-center justify-center gap-2 hover:opacity-90 transition-opacity shadow-lg disabled:opacity-40 disabled:cursor-not-allowed" id="checkoutBtn" onclick="checkoutViaWhatsApp()">
+<span class="material-symbols-outlined">chat</span>
+                Checkout via WhatsApp
+            </button>
+</div>
+</div>
+</div>
 <!-- Quiz Modal -->
 <div class="fixed inset-0 bg-on-surface/40 backdrop-blur-sm z-[2000] hidden items-center justify-center p-4 opacity-0 transition-opacity duration-300" id="quizOverlay" onclick="handleOverlayClick(event)">
-<div class="glass-card bg-surface/90 rounded-2xl p-8 max-w-lg w-full relative transform scale-95 transition-transform duration-300 shadow-2xl border border-glass-border" id="quizBox">
+<div class="glass-card bg-surface/90 rounded-2xl p-6 md:p-8 max-w-lg w-full relative transform scale-95 transition-transform duration-300 shadow-2xl border border-glass-border max-h-[85vh] overflow-y-auto" id="quizBox">
 <button class="absolute top-6 right-6 text-on-surface-variant hover:text-on-surface" onclick="closeQuiz()">
 <span class="material-symbols-outlined">close</span>
 </button>
@@ -632,15 +765,46 @@ void main() {
     }
 </script>
 <script>
-    // Custom Cursor Logic
+    // Custom Cursor Logic (desktop / mouse devices only)
     const cursor = document.getElementById('cursor');
-    document.addEventListener('mousemove', (e) => {
-        cursor.style.left = e.clientX + 'px';
-        cursor.style.top = e.clientY + 'px';
-    });
+    const isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
+    if (isTouchDevice) {
+        cursor.style.display = 'none';
+    } else {
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
 
-    document.addEventListener('mousedown', () => cursor.style.transform = 'translate(-50%, -50%) scale(0.8)');
-    document.addEventListener('mouseup', () => cursor.style.transform = 'translate(-50%, -50%) scale(1)');
+        document.addEventListener('mousedown', () => cursor.style.transform = 'translate(-50%, -50%) scale(0.8)');
+        document.addEventListener('mouseup', () => cursor.style.transform = 'translate(-50%, -50%) scale(1)');
+    }
+
+    // Mobile Menu Logic
+    function toggleMobileMenu() {
+        const panel = document.getElementById('mobileMenuPanel');
+        const btn = document.getElementById('mobileMenuBtn');
+        const icon = document.getElementById('mobileMenuIcon');
+        const isOpen = !panel.classList.contains('hidden');
+        if (isOpen) {
+            closeMobileMenu();
+        } else {
+            panel.classList.remove('hidden');
+            panel.classList.add('flex');
+            icon.textContent = 'close';
+            btn.setAttribute('aria-expanded', 'true');
+        }
+    }
+
+    function closeMobileMenu() {
+        const panel = document.getElementById('mobileMenuPanel');
+        const btn = document.getElementById('mobileMenuBtn');
+        const icon = document.getElementById('mobileMenuIcon');
+        panel.classList.add('hidden');
+        panel.classList.remove('flex');
+        icon.textContent = 'menu';
+        btn.setAttribute('aria-expanded', 'false');
+    }
 
     // Accordion Logic
     function toggleAccordion(button) {
@@ -760,5 +924,170 @@ void main() {
         document.getElementById('stepResult').classList.remove('hidden');
         document.getElementById('stepResult').classList.add('block');
     }
+</script>
+<!-- Cart & WhatsApp Ordering Logic -->
+<script>
+    // ==== GANTI NOMOR INI DENGAN NOMOR WHATSAPP BISNIS KAMU (format: kode negara tanpa +, tanpa 0 di depan) ====
+    const WHATSAPP_NUMBER = '6281234567890';
+
+    function formatRupiah(number) {
+        return 'Rp ' + number.toLocaleString('id-ID');
+    }
+
+    function getCart() {
+        try {
+            return JSON.parse(localStorage.getItem('quincy_cart')) || [];
+        } catch (e) {
+            return [];
+        }
+    }
+
+    function saveCart(cart) {
+        localStorage.setItem('quincy_cart', JSON.stringify(cart));
+        renderCart();
+        updateCartBadge();
+    }
+
+    function addToCart(name, price) {
+        const cart = getCart();
+        const existing = cart.find(item => item.name === name);
+        if (existing) {
+            existing.qty += 1;
+        } else {
+            cart.push({ name, price, qty: 1 });
+        }
+        saveCart(cart);
+        openCart();
+    }
+
+    function changeQty(name, delta) {
+        let cart = getCart();
+        const item = cart.find(i => i.name === name);
+        if (!item) return;
+        item.qty += delta;
+        if (item.qty <= 0) {
+            cart = cart.filter(i => i.name !== name);
+        }
+        saveCart(cart);
+    }
+
+    function removeFromCart(name) {
+        const cart = getCart().filter(i => i.name !== name);
+        saveCart(cart);
+    }
+
+    function updateCartBadge() {
+        const cart = getCart();
+        const totalQty = cart.reduce((sum, i) => sum + i.qty, 0);
+        const badge = document.getElementById('cartBadge');
+        if (!badge) return;
+        badge.textContent = totalQty;
+        badge.classList.toggle('hidden', totalQty === 0);
+    }
+
+    function renderCart() {
+        const cart = getCart();
+        const list = document.getElementById('cartItemsList');
+        const emptyState = document.getElementById('cartEmptyState');
+        const totalEl = document.getElementById('cartTotal');
+        const checkoutBtn = document.getElementById('checkoutBtn');
+        if (!list) return;
+
+        if (cart.length === 0) {
+            list.innerHTML = '';
+            emptyState.classList.remove('hidden');
+            checkoutBtn.setAttribute('disabled', 'true');
+        } else {
+            emptyState.classList.add('hidden');
+            checkoutBtn.removeAttribute('disabled');
+            list.innerHTML = cart.map(item => `
+                <div class="flex items-center justify-between gap-4 p-4 rounded-xl border border-outline-variant">
+                    <div>
+                        <p class="font-headline-md text-body-lg text-on-surface">${item.name}</p>
+                        <p class="font-body-md text-on-surface-variant text-sm">${formatRupiah(item.price)}</p>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <button aria-label="Kurangi" class="w-8 h-8 rounded-full border border-outline flex items-center justify-center hover:bg-surface-container-high" onclick="changeQty('${item.name}', -1)">-</button>
+                        <span class="font-mono-metric w-6 text-center">${item.qty}</span>
+                        <button aria-label="Tambah" class="w-8 h-8 rounded-full border border-outline flex items-center justify-center hover:bg-surface-container-high" onclick="changeQty('${item.name}', 1)">+</button>
+                        <button aria-label="Hapus" class="w-8 h-8 rounded-full text-error flex items-center justify-center hover:bg-error-container" onclick="removeFromCart('${item.name}')">
+                            <span class="material-symbols-outlined text-[18px]">delete</span>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        const total = cart.reduce((sum, i) => sum + i.price * i.qty, 0);
+        totalEl.textContent = formatRupiah(total);
+    }
+
+    function openCart() {
+        renderCart();
+        const overlay = document.getElementById('cartOverlay');
+        const box = document.getElementById('cartBox');
+        overlay.classList.remove('hidden');
+        overlay.classList.add('flex');
+        setTimeout(() => {
+            overlay.classList.remove('opacity-0');
+            box.classList.remove('scale-95');
+        }, 10);
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeCart() {
+        const overlay = document.getElementById('cartOverlay');
+        const box = document.getElementById('cartBox');
+        overlay.classList.add('opacity-0');
+        box.classList.add('scale-95');
+        setTimeout(() => {
+            overlay.classList.add('hidden');
+            overlay.classList.remove('flex');
+            document.body.style.overflow = '';
+        }, 300);
+    }
+
+    function handleCartOverlayClick(e) {
+        if (e.target === document.getElementById('cartOverlay')) closeCart();
+    }
+
+    function checkoutViaWhatsApp() {
+        const cart = getCart();
+        if (cart.length === 0) return;
+        let message = 'Halo Quincy Aromatique, saya ingin memesan:\n\n';
+        cart.forEach(item => {
+            message += `- ${item.name} x${item.qty} (${formatRupiah(item.price * item.qty)})\n`;
+        });
+        const total = cart.reduce((sum, i) => sum + i.price * i.qty, 0);
+        message += `\nTotal: ${formatRupiah(total)}\n\nMohon info untuk proses selanjutnya. Terima kasih!`;
+        const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+        window.open(url, '_blank');
+    }
+
+    function orderViaWhatsApp() {
+        const message = 'Halo Quincy Aromatique, saya tertarik dengan produk parfum kalian. Boleh minta info lebih lanjut?';
+        const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+        window.open(url, '_blank');
+    }
+
+    // Init on load
+    document.addEventListener('DOMContentLoaded', () => {
+        updateCartBadge();
+
+        // Scroll Reveal Animation for "Cara Order" cards
+        const revealObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { root: null, rootMargin: '0px', threshold: 0.1 });
+
+        document.querySelectorAll('.reveal-card').forEach((card, index) => {
+            card.style.transitionDelay = `${index * 150}ms`;
+            revealObserver.observe(card);
+        });
+    });
 </script>
 </body></html>
