@@ -4,14 +4,33 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Quincy Aromatique | Wangimu Adalah Cerita Pertama</title>
+<meta name="description" content="Temukan parfum terbaik dan elegan dari Quincy Aromatique. Wangimu adalah cerita pertama, ciptakan memori indah dengan aroma pilihan kami."/>
+<meta name="keywords" content="parfum, parfum quincy, quincy aromatique, parfum lokal, wewangian, parfum elegan, parfum pria, parfum wanita"/>
+<meta name="author" content="Quincy Aromatique"/>
+<meta property="og:title" content="Quincy Aromatique | Wangimu Adalah Cerita Pertama"/>
+<meta property="og:description" content="Temukan parfum terbaik dan elegan dari Quincy Aromatique. Wangimu adalah cerita pertama, ciptakan memori indah dengan aroma pilihan kami."/>
+<meta property="og:type" content="website"/>
+<meta name="robots" content="index, follow"/>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-3W4MH9WGD0"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-3W4MH9WGD0');
+</script>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&amp;family=JetBrains+Mono:wght@700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <script id="tailwind-config">
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      container: {
+        center: true,
+      },
+      extend: {
             "colors": {
                     "on-primary-fixed": "#3d0600",
                     "secondary": "#556500",
@@ -178,25 +197,36 @@
             }
         }
 
-        /* Scroll Reveal Animation - Cara Order cards */
+        /* Scroll Reveal Animations */
         @media (prefers-reduced-motion: no-preference) {
-            .reveal-card {
+            .reveal, .reveal-card {
                 opacity: 0;
-                transform: translateY(20px);
-                transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+                transform: translateY(30px);
+                transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
             }
-            .reveal-card.is-visible {
+            .reveal.is-visible, .reveal-card.is-visible {
                 opacity: 1;
                 transform: translateY(0);
             }
-        }
-        @media (prefers-reduced-motion: reduce) {
-            .reveal-card {
-                opacity: 0;
-                transition: opacity 0.6s ease-out;
+            .reveal-delay-1 { transition-delay: 150ms; }
+            .reveal-delay-2 { transition-delay: 300ms; }
+            .reveal-delay-3 { transition-delay: 450ms; }
+            
+            .nav-link {
+                position: relative;
             }
-            .reveal-card.is-visible {
-                opacity: 1;
+            .nav-link::after {
+                content: '';
+                position: absolute;
+                width: 0;
+                height: 2px;
+                bottom: -4px;
+                left: 0;
+                background-color: currentColor;
+                transition: width 0.3s ease;
+            }
+            .nav-link:hover::after {
+                width: 100%;
             }
         }
     </style>
@@ -210,17 +240,17 @@
 <span class="font-headline-md text-headline-md font-bold tracking-tighter text-on-surface truncate">Quincy Aromatique</span>
 </div>
 <div class="hidden md:flex items-center gap-8">
-<a class="font-body-md text-body-md text-on-surface-variant hover:opacity-70 transition-opacity" href="#karimun">Karimun</a>
-<a class="font-body-md text-body-md text-on-surface-variant hover:opacity-70 transition-opacity" href="#hanam">Hanam</a>
-<a class="font-body-md text-body-md text-on-surface-variant hover:opacity-70 transition-opacity" href="#fruits">Fruits</a>
-<a class="font-body-md text-body-md text-on-surface-variant hover:opacity-70 transition-opacity" href="#about">About</a>
+<a class="nav-link font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" href="#karimun">Karimun</a>
+<a class="nav-link font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" href="#hanam">Hanam</a>
+<a class="nav-link font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" href="#fruits">Fruits</a>
+<a class="nav-link font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" href="#about">About</a>
 </div>
 <div class="flex items-center gap-2 md:gap-3 shrink-0">
-<button aria-label="Buka keranjang" class="relative w-11 h-11 md:w-12 md:h-12 rounded-full border border-outline flex items-center justify-center hover:bg-surface-container-high transition-colors" onclick="openCart()">
+<button aria-label="Buka keranjang" class="relative w-11 h-11 md:w-12 md:h-12 rounded-full border border-outline flex items-center justify-center hover:bg-surface-container-high hover:scale-105 transition-all" onclick="openCart()">
 <span class="material-symbols-outlined">shopping_cart</span>
-<span class="absolute -top-1 -right-1 min-w-[20px] h-5 px-1 rounded-full bg-primary text-on-primary text-[11px] font-bold flex items-center justify-center hidden" id="cartBadge">0</span>
+<span class="absolute -top-1 -right-1 min-w-[20px] h-5 px-1 rounded-full bg-primary text-on-primary text-[11px] font-bold flex items-center justify-center hidden shadow-sm" id="cartBadge">0</span>
 </button>
-<button class="hidden md:inline-flex bg-primary text-on-primary px-6 py-3 rounded-full font-bold hover:opacity-90 transition-all active:scale-95" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">Order Now</button>
+<button class="hidden md:inline-flex bg-primary text-on-primary px-6 py-3 rounded-full font-bold hover:opacity-90 hover:shadow-[0_0_15px_rgba(180,41,7,0.4)] transition-all duration-300 active:scale-95" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">Order Now</button>
 <button aria-expanded="false" aria-label="Buka menu" class="md:hidden w-11 h-11 rounded-full border border-outline flex items-center justify-center hover:bg-surface-container-high transition-colors" id="mobileMenuBtn" onclick="toggleMobileMenu()">
 <span class="material-symbols-outlined" id="mobileMenuIcon">menu</span>
 </button>
@@ -246,19 +276,19 @@
 <span class="material-symbols-outlined text-primary text-[18px]">verified</span>
 <span class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest relative z-10">Premium Eau De Parfum</span>
 </div>
-<h1 class="font-display-xl text-display-xl mb-8 max-w-4xl mx-auto leading-tight font-light">
+<h1 class="font-display-xl text-display-xl mb-8 max-w-4xl mx-auto leading-tight font-light reveal">
                     Wangimu adalah cerita pertama yang <br/>
-<span class="text-primary italic font-bold">kamu ceritakan.</span>
+<span class="text-transparent bg-clip-text bg-gradient-to-r from-primary via-primary-container to-violet-accent italic font-extrabold drop-shadow-sm">kamu ceritakan.</span>
 </h1>
 <p class="font-body-lg text-body-lg text-on-surface-variant mb-12 max-w-2xl mx-auto">
                     Temukan karakter unikmu melalui koleksi parfum eksklusif Quincy Aromatique. Dibuat untuk meninggalkan jejak memori yang tak terlupakan.
                 </p>
-<div class="flex flex-col md:flex-row items-center justify-center gap-4">
-<a class="w-full md:w-auto bg-on-surface text-surface px-8 py-4 rounded-full font-semibold text-body-lg flex items-center justify-center gap-2 hover:opacity-90 transition-opacity shadow-lg" href="#products">
+<div class="flex flex-col md:flex-row items-center justify-center gap-4 reveal reveal-delay-1">
+<a class="w-full md:w-auto bg-on-surface text-surface px-8 py-4 rounded-full font-semibold text-body-lg flex items-center justify-center gap-2 hover:scale-105 hover:shadow-[0_10px_20px_rgba(0,0,0,0.2)] transition-all duration-300 group" href="#products">
                         Lihat Koleksi
-                        <span class="material-symbols-outlined">arrow_forward</span>
+                        <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
 </a>
-<button class="w-full md:w-auto bg-white/50 text-on-surface border border-white/60 px-8 py-4 rounded-full font-semibold text-body-lg backdrop-blur-md hover:bg-white/80 transition-colors shadow-sm flex items-center justify-center gap-2" onclick="openQuiz()">
+<button class="w-full md:w-auto bg-white/50 text-on-surface border border-white/60 px-8 py-4 rounded-full font-semibold text-body-lg backdrop-blur-md hover:bg-white/90 hover:scale-105 transition-all duration-300 shadow-sm flex items-center justify-center gap-2" onclick="openQuiz()">
 <span class="material-symbols-outlined text-primary">quiz</span>
                         Ikuti Quiz Kepribadian
                     </button>
@@ -298,23 +328,23 @@
 </section>
 <!-- Cara Order Section -->
 <section class="px-container-padding py-section-gap flex flex-col gap-8 items-center bg-surface-container-low">
-<div class="text-center flex flex-col gap-2">
+<div class="text-center flex flex-col gap-2 reveal">
 <span class="font-label-caps text-label-caps text-primary uppercase tracking-widest">Cara Order</span>
 <h2 class="font-headline-lg text-headline-lg font-bold text-on-surface">Mudah, cepat, 3 langkah aja</h2>
 </div>
 <div class="flex flex-col md:flex-row gap-6 w-full max-w-4xl mx-auto">
-<div class="reveal-card flex-1 bg-surface-container-lowest p-6 rounded-2xl shadow-sm border border-glass-border flex flex-col gap-4 text-center md:text-left">
-<span class="font-mono-metric text-[40px] font-bold text-primary-container opacity-20">01</span>
+<div class="reveal flex-1 bg-surface-container-lowest p-6 rounded-2xl shadow-sm border border-glass-border hover:shadow-xl hover:-translate-y-2 transition-all duration-300 flex flex-col gap-4 text-center md:text-left group">
+<span class="font-mono-metric text-[40px] font-bold text-primary-container opacity-20 group-hover:opacity-60 transition-opacity">01</span>
 <h3 class="font-headline-md text-[20px] font-bold text-on-surface">Pilih Varian</h3>
 <p class="font-body-md text-body-md text-on-surface-variant">Ikuti quiz wangi atau pilih langsung aroma signature-mu dari koleksi kami.</p>
 </div>
-<div class="reveal-card flex-1 bg-surface-container-lowest p-6 rounded-2xl shadow-sm border border-glass-border flex flex-col gap-4 text-center md:text-left">
-<span class="font-mono-metric text-[40px] font-bold text-primary-container opacity-20">02</span>
+<div class="reveal reveal-delay-1 flex-1 bg-surface-container-lowest p-6 rounded-2xl shadow-sm border border-glass-border hover:shadow-xl hover:-translate-y-2 transition-all duration-300 flex flex-col gap-4 text-center md:text-left group">
+<span class="font-mono-metric text-[40px] font-bold text-primary-container opacity-20 group-hover:opacity-60 transition-opacity">02</span>
 <h3 class="font-headline-md text-[20px] font-bold text-on-surface">Checkout</h3>
 <p class="font-body-md text-body-md text-on-surface-variant">Masukkan produk ke keranjang, cek ringkasan pesanan, lalu checkout via WhatsApp.</p>
 </div>
-<div class="reveal-card flex-1 bg-surface-container-lowest p-6 rounded-2xl shadow-sm border border-glass-border flex flex-col gap-4 text-center md:text-left">
-<span class="font-mono-metric text-[40px] font-bold text-primary-container opacity-20">03</span>
+<div class="reveal reveal-delay-2 flex-1 bg-surface-container-lowest p-6 rounded-2xl shadow-sm border border-glass-border hover:shadow-xl hover:-translate-y-2 transition-all duration-300 flex flex-col gap-4 text-center md:text-left group">
+<span class="font-mono-metric text-[40px] font-bold text-primary-container opacity-20 group-hover:opacity-60 transition-opacity">03</span>
 <h3 class="font-headline-md text-[20px] font-bold text-on-surface">Terima &amp; Rasakan</h3>
 <p class="font-body-md text-body-md text-on-surface-variant">Pesananmu akan sampai dengan aman, siap jadi cerita pertamamu hari ini.</p>
 </div>
@@ -339,7 +369,7 @@
 </div>
 <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
 <!-- Karimun Card -->
-<div class="product-glass-card rounded-xl p-card-internal group hover:-translate-y-4 transition-all duration-500" id="karimun">
+<div class="product-glass-card rounded-xl p-card-internal group hover:-translate-y-4 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 reveal" id="karimun">
 <div class="relative aspect-[4/5] rounded-lg overflow-hidden mb-8">
 <img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" data-alt="A luxurious product photography shot of a minimalist clear glass perfume bottle labeled 'Karimun' by Quincy Aromatique. The bottle sits on a soft, sand-colored fabric under bright, warm sunlight, evoking a tropical island feeling. The background is a blurred soft-focus beach scene with subtle teal and coral hues. High-end, clean, and refreshing aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCqm-V4JTjXujK2tWcnQbJt3GRXXNcqIKJnmmU-QfjFsNcoYToGbHjgVt-dfYUUkIvWddAy3_-MT6NOYI5JFtp0lYx0CUYeRUpEL0r-Yu1nF3FpGCh14irROKFSX7F1uRRNNlAtghoTSasmRx6KEHCo246DRsWsrzVUp-rm4-qbaq-ckXQW3vg0FMDRjb96GVe_gBj8sjzY_N7Hz3qMqDx8WicJFlOFDNCB3z5kAxYiQML-EIK_Q_wvvX4KoxcWRs-XnWbzIRNytmRE"/>
 </div>
@@ -359,7 +389,7 @@
 </div>
 </div>
 <!-- Hanam Card (Popular) -->
-<div class="product-glass-card rounded-xl p-card-internal group hover:-translate-y-4 transition-all duration-500 border-primary/30 relative" id="hanam">
+<div class="product-glass-card rounded-xl p-card-internal group hover:-translate-y-4 hover:shadow-2xl hover:shadow-primary/20 transition-all duration-500 border-primary/30 relative reveal reveal-delay-1" id="hanam">
 <div class="absolute top-6 right-6 z-10 bg-primary text-on-primary px-4 py-1.5 rounded-full font-label-caps uppercase tracking-widest text-[10px] shadow-lg">Popular Choice</div>
 <div class="relative aspect-[4/5] rounded-lg overflow-hidden mb-8">
 <img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" data-alt="A premium aesthetic close-up of a perfume bottle named 'Hanam'. The lighting is moody and sophisticated with golden amber tones reflecting off the glass. Soft caramel swirls and vanilla pods are artistically blurred in the background, suggesting a sweet and warm scent profile. The atmosphere is cozy, luxurious, and inviting, perfectly fitting for a premium lifestyle brand." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBx7U0ca6aqzX-wRB0_D_CFgKuspHJa1rihXiynbArfnjVQalaw5gx3Gz9ObLNEbKYhd2RcokRvS30S8uXeJ21-6E709LrxAtPRV1EgdiX4-xNcao797aBCKDZp6FbgXmITuyBO9WLu0VMjxucF6adlb4O5IO7dWYC8JRTNduEADB6x-H5Wr-YqYeUf_bSp2wEzVkT0qtEheNcvpCSHuf7aNVi2Dyv0JesZQxA9loKL_-POAmDbqW3xoAU-VEhtjFGoLjvUV-EV3zQB"/>
@@ -380,7 +410,7 @@
 </div>
 </div>
 <!-- Fruits Card -->
-<div class="product-glass-card rounded-xl p-card-internal group hover:-translate-y-4 transition-all duration-500" id="fruits">
+<div class="product-glass-card rounded-xl p-card-internal group hover:-translate-y-4 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 reveal reveal-delay-2" id="fruits">
 <div class="relative aspect-[4/5] rounded-lg overflow-hidden mb-8">
 <img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" data-alt="A vibrant and energetic product shot for the 'Fruits' fragrance. The scene features a clear glass perfume bottle surrounded by artfully sliced citrus fruits like oranges and lemons, with a few fresh berries scattered nearby. High-key lighting emphasizes the bright, zesty nature of the scent. The color palette is dominated by oranges, yellows, and deep reds against a crisp white background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5Dl8skolOqpicVER1UV_w2sbBhwJN5JY9PPD4T0kHQWeK3RYPr61QVJLanfpyGAkKCxz1FVzxZsi12IxggWDXnjSDn-YadJafIfgzr-TYYZ1paqbhwhB5gm5tGIVrvPmNGn0z5ln1dMnkh4xMQYX1rXm4BJiybB9GJyCof2bKIoyP7WFVgNK_VRDufobqx_CA80Chw-jwHEz24fDxdOfwgNmoNVUmXYd0c1YhkUILLcwAJ0HNuH65P8mKPbMZT55b58lSSbX6ivOe"/>
 </div>
@@ -405,34 +435,34 @@
 <!-- Features Section -->
 <section class="py-section-gap bg-surface" id="about">
 <div class="container max-w-[1516px] px-container-padding">
-<div class="text-center mb-20">
+<div class="text-center mb-20 reveal">
 <h2 class="font-headline-lg text-headline-lg mb-6">Kenapa Quincy?</h2>
 <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">Kami tidak hanya menjual parfum, kami memberikan pengalaman aromatik yang meningkatkan kepercayaan dirimu.</p>
 </div>
 <div class="grid grid-cols-1 md:grid-cols-4 gap-gutter">
-<div class="glass-card p-card-internal rounded-lg text-center hover:bg-surface-container transition-colors">
-<div class="w-16 h-16 rounded-full bg-primary-fixed flex items-center justify-center mx-auto mb-6">
+<div class="reveal glass-card p-card-internal rounded-lg text-center hover:bg-surface-container hover:-translate-y-2 hover:shadow-xl hover:shadow-primary/10 transition-all duration-300 group">
+<div class="w-16 h-16 rounded-full bg-primary-fixed flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
 <span class="material-symbols-outlined text-primary text-3xl">timer</span>
 </div>
 <h4 class="font-headline-md text-headline-md mb-4">Long Lasting</h4>
 <p class="font-body-md text-body-md text-on-surface-variant">Tahan hingga 6-8 jam menemani aktivitas harianmu tanpa henti.</p>
 </div>
-<div class="glass-card p-card-internal rounded-lg text-center hover:bg-surface-container transition-colors">
-<div class="w-16 h-16 rounded-full bg-secondary-fixed flex items-center justify-center mx-auto mb-6">
+<div class="reveal reveal-delay-1 glass-card p-card-internal rounded-lg text-center hover:bg-surface-container hover:-translate-y-2 hover:shadow-xl hover:shadow-secondary/10 transition-all duration-300 group">
+<div class="w-16 h-16 rounded-full bg-secondary-fixed flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
 <span class="material-symbols-outlined text-secondary text-3xl">workspace_premium</span>
 </div>
 <h4 class="font-headline-md text-headline-md mb-4">Premium Quality</h4>
 <p class="font-body-md text-body-md text-on-surface-variant">Bahan baku impor berkualitas tinggi untuk hasil aroma yang elegan.</p>
 </div>
-<div class="glass-card p-card-internal rounded-lg text-center hover:bg-surface-container transition-colors">
-<div class="w-16 h-16 rounded-full bg-tertiary-fixed flex items-center justify-center mx-auto mb-6">
+<div class="reveal reveal-delay-2 glass-card p-card-internal rounded-lg text-center hover:bg-surface-container hover:-translate-y-2 hover:shadow-xl hover:shadow-tertiary/10 transition-all duration-300 group">
+<div class="w-16 h-16 rounded-full bg-tertiary-fixed flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
 <span class="material-symbols-outlined text-tertiary text-3xl">local_shipping</span>
 </div>
 <h4 class="font-headline-md text-headline-md mb-4">Fast Delivery</h4>
 <p class="font-body-md text-body-md text-on-surface-variant">Pengemasan aman dan pengiriman cepat ke seluruh Indonesia.</p>
 </div>
-<div class="glass-card p-card-internal rounded-lg text-center hover:bg-surface-container transition-colors">
-<div class="w-16 h-16 rounded-full bg-primary-fixed-dim flex items-center justify-center mx-auto mb-6">
+<div class="reveal reveal-delay-3 glass-card p-card-internal rounded-lg text-center hover:bg-surface-container hover:-translate-y-2 hover:shadow-xl hover:shadow-primary/10 transition-all duration-300 group">
+<div class="w-16 h-16 rounded-full bg-primary-fixed-dim flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
 <span class="material-symbols-outlined text-on-primary-fixed-variant text-3xl">eco</span>
 </div>
 <h4 class="font-headline-md text-headline-md mb-4">Cruelty Free</h4>
@@ -517,8 +547,8 @@
                 Bergabunglah dengan ribuan orang yang telah menemukan 'signature scent' mereka bersama Quincy Aromatique.
             </p>
 <div class="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-6 relative z-10">
-<button class="w-full md:w-auto bg-primary text-on-primary px-8 md:px-12 py-5 md:py-6 rounded-full font-bold text-body-lg hover:scale-105 transition-all shadow-xl" onclick="orderViaWhatsApp()">Pesan via WhatsApp</button>
-<button class="w-full md:w-auto bg-on-surface text-surface px-8 md:px-12 py-5 md:py-6 rounded-full font-bold text-body-lg hover:scale-105 transition-all" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">Lihat Katalog</button>
+<button class="w-full md:w-auto bg-primary text-on-primary px-8 md:px-12 py-5 md:py-6 rounded-full font-bold text-body-lg hover:scale-105 hover:shadow-[0_10px_30px_rgba(180,41,7,0.5)] transition-all duration-300 shadow-xl" onclick="orderViaWhatsApp()">Pesan via WhatsApp</button>
+<button class="w-full md:w-auto bg-on-surface text-surface px-8 md:px-12 py-5 md:py-6 rounded-full font-bold text-body-lg hover:scale-105 hover:shadow-[0_10px_20px_rgba(0,0,0,0.3)] transition-all duration-300" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">Lihat Katalog</button>
 </div>
 </div>
 </div>
@@ -826,6 +856,26 @@ void main() {
                 behavior: 'smooth'
             });
         });
+    });
+
+    // Scroll Reveal Observer
+    const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.1
+    };
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+    
+    // Tunggu DOM load untuk observe
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.reveal, .reveal-card').forEach(el => observer.observe(el));
     });
 
     // Quiz Logic
