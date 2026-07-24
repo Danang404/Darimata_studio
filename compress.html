@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<body>
+<canvas id="c" width="800" height="1200"></canvas>
+<script>
+const files = ["IMG_0002.heic.svg", "IMG_0014.heic.svg", "IMG_5229.heic.svg"];
+async function process() {
+    const canvas = document.getElementById('c');
+    const ctx = canvas.getContext('2d');
+    for (let f of files) {
+        await new Promise(r => {
+            const img = new Image();
+            img.onload = async () => {
+                ctx.clearRect(0,0,800,1200);
+                ctx.drawImage(img, 0, 0, 800, 1200);
+                const dataUrl = canvas.toDataURL("image/webp", 0.85);
+                await fetch("http://localhost:8001/save", {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify({filename: f.replace('.heic.svg', '.webp'), image: dataUrl})
+                });
+                r();
+            };
+            img.src = f;
+        });
+    }
+    document.body.innerHTML = "DONE";
+}
+process();
+</script>
+</body>
+</html>
